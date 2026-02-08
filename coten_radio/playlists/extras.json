@@ -1,0 +1,63 @@
+{
+  "id": "extras",
+  "displayName": "その他(番外編など)",
+  "resolverType": "category",
+  "contentType": "groups",
+  "yearHeaderMode": "none",
+  "episodeYearHeaders": false,
+  "groups": [
+    {
+      "id": "bukkyou",
+      "displayName": "仏教のこと、龍源さんに聞こう",
+      "pattern": "仏教のこと、龍源さんに聞こう",
+      "showDateRange": true
+    },
+    {
+      "id": "ukraine",
+      "displayName": "ウクライナ戦争",
+      "pattern": "【特別編　緊急収録】ウクライナとロシア|当事者としてのウクライナ戦争|ウクライナ戦争の現状と今後|揺らぐ北欧秩序",
+      "showDateRange": true
+    },
+    {
+      "id": "dazaifu",
+      "displayName": "太宰府天満宮 第40代宮司 西高辻󠄀信宏",
+      "pattern": "太宰府天満宮 第40代宮司 西高辻󠄀信宏さん",
+      "showDateRange": true
+    },
+    {
+      "id": "community-nurse",
+      "displayName": "コミュニティナース 矢田明子",
+      "pattern": "出雲発！コミュニティナースって何？",
+      "showDateRange": true
+    },
+    {
+      "id": "christ-chiba",
+      "displayName": "一緒に学ぼう！キリスト教 千葉遊大",
+      "pattern": "一緒に学ぼう！キリスト教",
+      "showDateRange": true
+    },
+    {
+      "id": "yell-shinoda",
+      "displayName": "聴く力 篠田真貴子",
+      "pattern": "エール株式会社 篠田真貴子さんと語る「聴く力」",
+      "showDateRange": true
+    },
+    {
+      "id": "extra",
+      "displayName": "番外編",
+      "pattern": "番外編\\s*[#＃]",
+      "episodeYearHeaders": true
+    },
+    {
+      "id": "special",
+      "displayName": "特別編",
+      "pattern": "特別編",
+      "episodeYearHeaders": true
+    },
+    {
+      "id": "other",
+      "displayName": "その他",
+      "episodeYearHeaders": true
+    }
+  ]
+}

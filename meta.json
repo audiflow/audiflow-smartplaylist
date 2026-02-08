@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "patterns": [
+    {
+      "id": "coten_radio",
+      "version": 1,
+      "displayName": "Coten Radio",
+      "feedUrlHint": "https://anchor.fm/s/8c2088c/podcast/rss",
+      "playlistCount": 3
+    },
+    {
+      "id": "news_connect",
+      "version": 1,
+      "displayName": "News Connect",
+      "feedUrlHint": "https://anchor.fm/s/81fb5eec/podcast/rss",
+      "playlistCount": 2
+    }
+  ]
+}
