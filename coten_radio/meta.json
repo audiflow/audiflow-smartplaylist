@@ -1,9 +1,8 @@
 {
   "version": 1,
   "id": "coten_radio",
-  "feedUrlPatterns": [
-    "https://anchor\\.fm/s/8c2088c/podcast/rss",
-    "https://.*anchor\\.fm.*\\b8c2088c\\b.*"
+  "feedUrls": [
+    "https://anchor.fm/s/8c2088c/podcast/rss"
   ],
   "yearGroupedEpisodes": true,
   "playlists": [

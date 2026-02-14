@@ -1,9 +1,8 @@
 {
   "version": 1,
   "id": "news_connect",
-  "feedUrlPatterns": [
-    "https://anchor\\.fm/s/81fb5eec/podcast/rss",
-    "https://.*anchor\\.fm.*81fb5eec.*"
+  "feedUrls": [
+    "https://anchor.fm/s/81fb5eec/podcast/rss"
   ],
   "yearGroupedEpisodes": true,
   "playlists": [
