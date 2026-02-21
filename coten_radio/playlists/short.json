@@ -38,11 +38,6 @@
       "template": "番外編"
     }
   },
-  "episodeNumberExtractor": {
-    "pattern": "(\\d+)】",
-    "captureGroup": 1,
-    "fallbackToRss": true
-  },
   "smartPlaylistEpisodeExtractor": {
     "source": "title",
     "pattern": "【(\\d+)-(\\d+)】",
@@ -50,6 +45,7 @@
     "episodeGroup": 2,
     "fallbackSeasonNumber": 0,
     "fallbackEpisodePattern": "【番外編[＃#](\\d+)】",
-    "fallbackEpisodeCaptureGroup": 1
+    "fallbackEpisodeCaptureGroup": 1,
+    "fallbackToRss": true
   }
 }
