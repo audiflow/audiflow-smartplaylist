@@ -6,6 +6,7 @@
   "yearHeaderMode": "firstEpisode",
   "episodeYearHeaders": false,
   "showDateRange": true,
+  "showSortOrderToggle": true,
   "titleFilter": "【\\d+-\\d+】",
   "excludeFilter": "【COTEN RADIO\\s*ショート",
   "nullSeasonGroupKey": 0,
