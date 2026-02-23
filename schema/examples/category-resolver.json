@@ -1,0 +1,27 @@
+{
+  "id": "categories",
+  "displayName": "Story Arcs",
+  "resolverType": "category",
+  "priority": 50,
+  "contentType": "groups",
+  "titleFilter": "(?:Main|Bonus)",
+  "excludeFilter": "(?:Trailer|Preview)",
+  "groups": [
+    {
+      "id": "main",
+      "displayName": "Main Episodes",
+      "pattern": "^Main\\b",
+      "episodeYearHeaders": true,
+      "showDateRange": true
+    },
+    {
+      "id": "bonus",
+      "displayName": "Bonus Content",
+      "pattern": "^Bonus\\b"
+    },
+    {
+      "id": "other",
+      "displayName": "Other"
+    }
+  ]
+}

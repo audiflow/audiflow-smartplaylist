@@ -1,0 +1,6 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SmartPlaylist Definition",
+  "description": "A single smart playlist definition. Use this schema to validate individual playlist files.",
+  "$ref": "schema.json#/$defs/SmartPlaylistDefinition"
+}
