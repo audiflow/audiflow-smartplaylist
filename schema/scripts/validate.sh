@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCHEMA_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+SCHEMA_DIR="$(cd "$(dirname "$0")/.." >/dev/null && pwd)"
 
 usage() {
   echo "Usage: schema/scripts/validate.sh [--playlist] <config.json> [config2.json ...]"
@@ -19,6 +19,7 @@ usage() {
 }
 
 SCHEMA="${SCHEMA_DIR}/schema.json"
+PLAYLIST_MODE=false
 
 if [ $# -eq 0 ]; then
   usage
@@ -26,7 +27,7 @@ if [ $# -eq 0 ]; then
 fi
 
 if [ "$1" = "--playlist" ]; then
-  SCHEMA="${SCHEMA_DIR}/playlist-definition.schema.json"
+  PLAYLIST_MODE=true
   shift
 fi
 
@@ -38,11 +39,26 @@ fi
 errors=0
 for file in "$@"; do
   echo "Validating: $file"
-  if uv run --with check-jsonschema \
-    check-jsonschema --schemafile "$SCHEMA" "$file" 2>&1; then
-    echo "  ok"
+  if [ "$PLAYLIST_MODE" = true ]; then
+    # Wrap playlist in a config envelope and validate against main schema
+    if python3 -c "
+import json, sys
+playlist = json.load(open(sys.argv[1]))
+envelope = {'version': 1, 'patterns': [{'id': 'validate', 'playlists': [playlist]}]}
+json.dump(envelope, sys.stdout)
+" "$file" | uv run --with check-jsonschema \
+      check-jsonschema --schemafile "$SCHEMA" - 2>&1; then
+      echo "  ok"
+    else
+      errors=$((errors + 1))
+    fi
   else
-    errors=$((errors + 1))
+    if uv run --with check-jsonschema \
+      check-jsonschema --schemafile "$SCHEMA" "$file" 2>&1; then
+      echo "  ok"
+    else
+      errors=$((errors + 1))
+    fi
   fi
   echo ""
 done
