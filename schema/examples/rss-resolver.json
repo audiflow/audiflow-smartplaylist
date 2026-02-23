@@ -8,7 +8,6 @@
   "showDateRange": true,
   "nullSeasonGroupKey": 0,
   "customSort": {
-    "type": "composite",
     "rules": [
       {
         "field": "playlistNumber",

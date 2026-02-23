@@ -10,7 +10,6 @@
   "excludeFilter": "【COTEN RADIO\\s*ショート",
   "nullSeasonGroupKey": 0,
   "customSort": {
-    "type": "composite",
     "rules": [
       {
         "field": "playlistNumber",

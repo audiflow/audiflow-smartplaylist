@@ -5,8 +5,6 @@
   "contentType": "groups",
   "yearHeaderMode": "perEpisode",
   "customSort": {
-    "type": "simple",
-    "field": "playlistNumber",
-    "order": "descending"
+    "rules": [{ "field": "playlistNumber", "order": "descending" }]
   }
 }
