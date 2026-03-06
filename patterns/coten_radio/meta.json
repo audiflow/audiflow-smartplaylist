@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "dataVersion": 1,
   "id": "coten_radio",
   "feedUrls": [
     "https://anchor.fm/s/8c2088c/podcast/rss"
@@ -9,5 +9,6 @@
     "regular",
     "short",
     "extras"
-  ]
+  ],
+  "version": 1
 }

@@ -1,19 +1,31 @@
 {
-  "version": 1,
+  "dataVersion": 1,
+  "schemaVersion": 1,
   "patterns": [
     {
       "id": "coten_radio",
-      "version": 1,
+      "dataVersion": 1,
       "displayName": "Coten Radio",
       "feedUrlHint": "https://anchor.fm/s/8c2088c/podcast/rss",
-      "playlistCount": 3
+      "playlistCount": 3,
+      "version": 1
     },
     {
       "id": "news_connect",
-      "version": 1,
+      "dataVersion": 1,
       "displayName": "News Connect",
       "feedUrlHint": "https://anchor.fm/s/81fb5eec/podcast/rss",
-      "playlistCount": 2
+      "playlistCount": 2,
+      "version": 1
+    },
+    {
+      "id": "business-wars",
+      "dataVersion": 1,
+      "displayName": "Business Wars",
+      "feedUrlHint": "https://rss.art19.com/business-wars",
+      "playlistCount": 1,
+      "version": 1
     }
-  ]
+  ],
+  "version": 1
 }
