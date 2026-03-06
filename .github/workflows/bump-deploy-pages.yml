@@ -1,0 +1,69 @@
+name: Bump Versions & Deploy Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "patterns/**.json"
+      - ".github/workflows/bump-deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  bump-and-deploy:
+    if: github.actor != 'github-actions[bot]'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: dart-lang/setup-dart@v1
+
+      # --- Version Bump ---
+      - name: Clone editor repo
+        run: |
+          git clone --depth 1 \
+            https://github.com/audiflow/audiflow-smartplaylist-editor.git \
+            /tmp/editor
+
+      - name: Install editor dependencies
+        working-directory: /tmp/editor
+        run: dart pub get
+
+      - name: Bump versions
+        run: |
+          dart run /tmp/editor/packages/sp_cli/bin/bump_versions.dart \
+            $GITHUB_WORKSPACE/patterns HEAD~1
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add patterns/
+          git diff --cached --quiet || git commit -m "chore: bump versions"
+          git push
+
+      # --- Deploy to GitHub Pages ---
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: patterns
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
