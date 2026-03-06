@@ -1,0 +1,14 @@
+{
+  "id": "seasons",
+  "displayName": "Seasons",
+  "resolverType": "rss",
+  "showDateRange": true,
+  "showSeasonNumber": true,
+  "excludeFilter": "^(Best of Business Wars Daily|Encore: )",
+  "groups": [],
+  "titleExtractor": {
+    "source": "title",
+    "pattern": "^(.*?) [-|] ",
+    "group": 1
+  }
+}

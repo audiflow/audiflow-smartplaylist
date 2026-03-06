@@ -10,7 +10,7 @@ usage() {
   echo ""
   echo "Options:"
   echo "  --playlist  Validate as individual playlist definitions"
-  echo "              (default validates as full config with version + patterns)"
+  echo "              (default validates as full config with dataVersion + schemaVersion + patterns)"
   echo ""
   echo "Examples:"
   echo "  schema/scripts/validate.sh patterns/meta.json"
@@ -44,7 +44,7 @@ for file in "$@"; do
     if python3 -c "
 import json, sys
 playlist = json.load(open(sys.argv[1]))
-envelope = {'version': 1, 'patterns': [{'id': 'validate', 'playlists': [playlist]}]}
+envelope = {'dataVersion': 1, 'schemaVersion': 1, 'patterns': [{'id': 'validate', 'playlists': [playlist]}]}
 json.dump(envelope, sys.stdout)
 " "$file" | uv run --with check-jsonschema \
       check-jsonschema --schemafile "$SCHEMA" - 2>&1; then

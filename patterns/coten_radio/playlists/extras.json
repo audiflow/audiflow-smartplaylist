@@ -2,51 +2,101 @@
   "id": "extras",
   "displayName": "その他(番外編など)",
   "resolverType": "category",
+  "priority": 30,
   "contentType": "groups",
-  "yearHeaderMode": "none",
-  "episodeYearHeaders": false,
+  "showDateRange": true,
+  "showSortOrderToggle": true,
   "groups": [
     {
       "id": "bukkyou",
       "displayName": "仏教のこと、龍源さんに聞こう",
-      "pattern": "仏教のこと、龍源さんに聞こう",
-      "showDateRange": true
-    },
-    {
-      "id": "ukraine",
-      "displayName": "ウクライナ戦争",
-      "pattern": "【特別編　緊急収録】ウクライナとロシア|当事者としてのウクライナ戦争|ウクライナ戦争の現状と今後|揺らぐ北欧秩序",
-      "showDateRange": true
+      "pattern": "仏教のこと、龍源さんに聞こう"
     },
     {
       "id": "dazaifu",
       "displayName": "太宰府天満宮 第40代宮司 西高辻󠄀信宏",
-      "pattern": "太宰府天満宮 第40代宮司 西高辻󠄀信宏さん",
-      "showDateRange": true
+      "pattern": "太宰府天満宮 第40代宮司 西高辻󠄀信宏さん"
     },
     {
       "id": "community-nurse",
       "displayName": "コミュニティナース 矢田明子",
-      "pattern": "出雲発！コミュニティナースって何？",
-      "showDateRange": true
+      "pattern": "出雲発！コミュニティナースって何？"
     },
     {
       "id": "christ-chiba",
       "displayName": "一緒に学ぼう！キリスト教 千葉遊大",
-      "pattern": "一緒に学ぼう！キリスト教",
-      "showDateRange": true
+      "pattern": "一緒に学ぼう！キリスト教"
+    },
+    {
+      "id": "ukraine",
+      "displayName": "ウクライナ戦争",
+      "pattern": "【特別編　緊急収録】ウクライナとロシア|当事者としてのウクライナ戦争|ウクライナ戦争の現状と今後|揺らぐ北欧秩序"
+    },
+    {
+      "id": "wakamiya",
+      "displayName": "若新雄純",
+      "pattern": "若新雄純",
+      "episodeYearHeaders": false
+    },
+    {
+      "id": "zaibatsu",
+      "displayName": "財閥の歴史",
+      "pattern": "財閥の歴史"
     },
     {
       "id": "yell-shinoda",
       "displayName": "聴く力 篠田真貴子",
-      "pattern": "エール株式会社 篠田真貴子さんと語る「聴く力」",
-      "showDateRange": true
+      "pattern": "エール株式会社 篠田真貴子さんと語る「聴く力」"
     },
     {
-      "id": "extra",
-      "displayName": "番外編",
-      "pattern": "番外編\\s*[#＃]",
-      "episodeYearHeaders": true
+      "id": "av_nimura",
+      "displayName": "AV監督・二村ヒトシ",
+      "pattern": "AV監督・二村ヒトシ"
+    },
+    {
+      "id": "nakamuratetsu",
+      "displayName": "「一隅を照らす」中村哲",
+      "pattern": "「一隅を照らす」中村哲"
+    },
+    {
+      "id": "takatoriya",
+      "displayName": "中東で一番有名な日本人！鷹鳥屋明",
+      "pattern": "中東で一番有名な日本人！鷹鳥屋明"
+    },
+    {
+      "id": "murokoshi",
+      "displayName": "人類学って何？室越龍之介",
+      "pattern": "人類学って何？"
+    },
+    {
+      "id": "takachin",
+      "displayName": "握手しただけで才能と性癖がわかる男・たかちん",
+      "pattern": "握手しただけで才能と性癖がわかる男・たかちん"
+    },
+    {
+      "id": "processeconomy",
+      "displayName": "プロセスエコノミー 尾原和啓",
+      "pattern": "プロセスエコノミー"
+    },
+    {
+      "id": "mental_care",
+      "displayName": "メンタルケア、どうしてる？",
+      "pattern": "メンタルケア、どうしてる？"
+    },
+    {
+      "id": "boderlessjapan",
+      "displayName": "ボーダレス・ジャパン田口代表",
+      "pattern": "ボーダレス・ジャパン田口代表"
+    },
+    {
+      "id": "shikumi_design",
+      "displayName": "しくみデザイン 中村俊介",
+      "pattern": "しくみデザイン 中村俊介"
+    },
+    {
+      "id": "hongokazuto",
+      "displayName": "東京大学史料編纂所 本郷和人",
+      "pattern": "東京大学史料編纂所 本郷和人"
     },
     {
       "id": "special",
@@ -55,9 +105,71 @@
       "episodeYearHeaders": true
     },
     {
+      "id": "ukita",
+      "displayName": "戦国の貴公子 宇喜多秀家",
+      "pattern": "宇喜多秀家",
+      "episodeYearHeaders": false
+    },
+    {
+      "id": "sadoshima",
+      "displayName": "観察力の鍛え方 佐渡島庸平",
+      "pattern": "佐渡島庸平",
+      "episodeYearHeaders": false
+    },
+    {
+      "id": "kusano",
+      "displayName": "PMの仕事から見るCOTEN 草野陽夏",
+      "pattern": "草野陽夏の仕事から見る",
+      "episodeYearHeaders": false
+    },
+    {
+      "id": "heralbony",
+      "displayName": "ヘラルボニーの挑戦",
+      "pattern": "ヘラルボニーの挑戦",
+      "episodeYearHeaders": false
+    },
+    {
+      "id": "aoyagi",
+      "displayName": "青柳考哉（株式会社BOOK）",
+      "pattern": "青柳考哉",
+      "episodeYearHeaders": false
+    },
+    {
+      "id": "nakagawa",
+      "displayName": "中川政七商店",
+      "pattern": "中川政七商店",
+      "episodeYearHeaders": false
+    },
+    {
+      "id": "kitagawa",
+      "displayName": "量子コンピュータ 北川拓也",
+      "pattern": "北川拓也",
+      "episodeYearHeaders": false
+    },
+    {
+      "id": "marui_aoi",
+      "displayName": "丸井グループCEO 青井浩",
+      "pattern": "丸井グループ.*?青井浩"
+    },
+    {
+      "id": "extra",
+      "displayName": "番外編",
+      "pattern": "番外編\\s*[#＃]",
+      "episodeYearHeaders": true
+    },
+    {
       "id": "other",
       "displayName": "その他",
+      "pattern": "",
       "episodeYearHeaders": true
     }
-  ]
+  ],
+  "customSort": {
+    "rules": [
+      {
+        "field": "newestEpisodeDate",
+        "order": "descending"
+      }
+    ]
+  }
 }
