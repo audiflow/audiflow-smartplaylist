@@ -1,0 +1,27 @@
+name: Validate Configs
+
+on:
+  pull_request:
+    paths: ["patterns/**.json"]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+
+      - name: Clone editor repo
+        run: |
+          git clone --depth 1 \
+            https://github.com/audiflow/audiflow-smartplaylist-editor.git \
+            /tmp/editor
+
+      - name: Install dependencies
+        working-directory: /tmp/editor
+        run: dart pub get
+
+      - name: Validate configs
+        run: |
+          dart run /tmp/editor/packages/sp_cli/bin/validate.dart \
+            $GITHUB_WORKSPACE/patterns
