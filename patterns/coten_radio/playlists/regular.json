@@ -2,33 +2,41 @@
   "id": "regular",
   "displayName": "レギュラーシリーズ",
   "resolverType": "rss",
-  "priority": 10,
   "contentType": "groups",
   "yearHeaderMode": "firstEpisode",
+  "episodeYearHeaders": false,
   "showDateRange": true,
   "showSortOrderToggle": true,
   "titleFilter": "【\\d+-\\d+】",
   "excludeFilter": "【COTEN RADIO\\s*ショート",
   "nullSeasonGroupKey": 0,
-  "groups": [],
   "customSort": {
     "rules": [
       {
         "field": "playlistNumber",
+        "order": "ascending",
+        "condition": {
+          "type": "sortKeyGreaterThan",
+          "value": 0
+        }
+      },
+      {
+        "field": "newestEpisodeDate",
         "order": "ascending"
       }
     ]
   },
   "titleExtractor": {
     "source": "title",
-    "pattern": "【COTEN RADIO\\s*([^】]+)編\\s*(\\d+)】",
-    "group": 1,
+    "pattern": "【?COTEN RADIO(ショート)?\\s+(.+?)編?\\s*(\\d+|前編|中編|後編)】",
+    "group": 2,
+    "fallbackValue": "番外編",
     "fallback": {
       "source": "title",
-      "pattern": "【COTEN RADIO\\s*(.+?)\\s*(\\d+)】",
-      "group": 1
-    },
-    "fallbackValue": "その他"
+      "pattern": "【番外編",
+      "group": 0,
+      "template": "番外編"
+    }
   },
   "smartPlaylistEpisodeExtractor": {
     "source": "title",
@@ -36,7 +44,8 @@
     "seasonGroup": 1,
     "episodeGroup": 2,
     "fallbackSeasonNumber": 0,
-    "fallbackEpisodePattern": "(\\d+)】",
+    "fallbackEpisodePattern": "【番外編[＃#](\\d+)】",
+    "fallbackEpisodeCaptureGroup": 1,
     "fallbackToRss": true
   }
 }
