@@ -4,7 +4,7 @@
   "resolverType": "category",
   "contentType": "groups",
   "yearHeaderMode": "perEpisode",
-  "showSortOrderToggle": true,
+  "episodeYearHeaders": false,
   "groups": [
     {
       "id": "daily_news",
