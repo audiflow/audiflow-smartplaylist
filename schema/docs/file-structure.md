@@ -18,13 +18,14 @@ Lists all available pattern configs with summary information for browsing.
 
 ```json
 {
-  "version": 1,
+  "dataVersion": 1,
+  "schemaVersion": 1,
   "patterns": [
     {
       "id": "coten_radio",
-      "version": 1,
+      "dataVersion": 1,
       "displayName": "Coten Radio",
-      "feedUrlHint": "anchor.fm/s/8c2088c",
+      "feedUrlHint": "https://anchor.fm/s/8c2088c/podcast/rss",
       "playlistCount": 3
     }
   ]
@@ -33,12 +34,13 @@ Lists all available pattern configs with summary information for browsing.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `version` | integer | Schema version (must be 1) |
+| `dataVersion` | integer | Data format version (must be 1) |
+| `schemaVersion` | integer | Schema definition version |
 | `patterns` | array | Pattern summaries for discovery |
 | `patterns[].id` | string | Pattern directory name |
-| `patterns[].version` | integer | Pattern version (incremented on change) |
+| `patterns[].dataVersion` | integer | Pattern data version (incremented on change) |
 | `patterns[].displayName` | string | Human-readable name |
-| `patterns[].feedUrlHint` | string | Partial feed URL for identification |
+| `patterns[].feedUrlHint` | string | Feed URL for identification |
 | `patterns[].playlistCount` | integer | Number of playlist definitions |
 
 ## Pattern meta.json
@@ -47,7 +49,7 @@ Located at `{patternId}/meta.json`. Contains feed matching rules and an ordered 
 
 ```json
 {
-  "version": 1,
+  "dataVersion": 1,
   "id": "coten_radio",
   "podcastGuid": "abc-123-def",
   "feedUrls": [
@@ -60,7 +62,7 @@ Located at `{patternId}/meta.json`. Contains feed matching rules and an ordered 
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `version` | integer | yes | Pattern version |
+| `dataVersion` | integer | yes | Pattern data version |
 | `id` | string | yes | Must match directory name |
 | `podcastGuid` | string | no | GUID for exact matching (checked first) |
 | `feedUrls` | array of strings | yes | Feed URLs for matching |
@@ -69,7 +71,7 @@ Located at `{patternId}/meta.json`. Contains feed matching rules and an ordered 
 
 ## Playlist definition
 
-Located at `{patternId}/playlists/{playlistId}.json`. Contains a single `SmartPlaylistDefinition` object as defined in [schema.json](../schema.json).
+Located at `{patternId}/playlists/{playlistId}.json`. Contains a single playlist definition as defined in [playlist-definition.schema.json](../playlist-definition.schema.json).
 
 See the [examples](../examples/) directory for complete playlist definitions using each resolver type.
 
