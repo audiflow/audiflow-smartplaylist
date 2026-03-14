@@ -91,26 +91,38 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_REPOSITORY: ${{ github.repository }}
 
+      - name: Read schema version
+        id: schema
+        run: |
+          version=$(jq -r '.schemaVersion // empty' source/patterns/meta.json)
+          if [ -z "$version" ]; then
+            echo "::error::schemaVersion not found in patterns/meta.json"
+            exit 1
+          fi
+          echo "version=v${version}" >> "$GITHUB_OUTPUT"
+
       - name: Sync patterns to deploy directory
         env:
           DEPLOY_DIR: ${{ steps.env.outputs.deploy_dir }}
+          SCHEMA_VERSION: ${{ steps.schema.outputs.version }}
         run: |
-          mkdir -p "gh-pages/${DEPLOY_DIR}"
+          mkdir -p "gh-pages/${DEPLOY_DIR}/${SCHEMA_VERSION}"
           rsync -a --delete \
             source/patterns/ \
-            "gh-pages/${DEPLOY_DIR}/"
+            "gh-pages/${DEPLOY_DIR}/${SCHEMA_VERSION}/"
 
       - name: Commit and push to gh-pages
         working-directory: gh-pages
         env:
           DEPLOY_DIR: ${{ steps.env.outputs.deploy_dir }}
+          SCHEMA_VERSION: ${{ steps.schema.outputs.version }}
           BRANCH: ${{ github.ref_name }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git diff --cached --quiet && echo "No changes to deploy" && exit 0
-          git commit -m "deploy: update ${DEPLOY_DIR} from ${BRANCH}"
+          git commit -m "deploy: update ${DEPLOY_DIR}/${SCHEMA_VERSION} from ${BRANCH}"
           for attempt in 1 2 3; do
             git push origin gh-pages && exit 0
             echo "Push conflict (attempt ${attempt}), rebasing..."

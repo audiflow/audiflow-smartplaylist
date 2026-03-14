@@ -6,9 +6,11 @@ Smart playlist configuration data for all environments. Static JSON files deploy
 
 | Branch | Deploy path | URL |
 |--------|------------|-----|
-| `main` | `/assets/` | `audiflow.github.io/audiflow-smartplaylist/assets/` |
-| `staging` | `/assets-stg/` | `audiflow.github.io/audiflow-smartplaylist/assets-stg/` |
-| `dev` | `/assets-dev/` | `audiflow.github.io/audiflow-smartplaylist/assets-dev/` |
+| `main` | `/assets/v{N}/` | `audiflow.github.io/audiflow-smartplaylist/assets/v{N}/` |
+| `staging` | `/assets-stg/v{N}/` | `audiflow.github.io/audiflow-smartplaylist/assets-stg/v{N}/` |
+| `dev` | `/assets-dev/v{N}/` | `audiflow.github.io/audiflow-smartplaylist/assets-dev/v{N}/` |
+
+`{N}` is read from `patterns/meta.json#schemaVersion` at deploy time. Old schema versions remain frozen on `gh-pages` — only the current version's directory is updated.
 
 Branch flow: `dev` -> PR -> `staging` -> PR -> `main`
 
