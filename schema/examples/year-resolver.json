@@ -2,9 +2,12 @@
   "id": "by-year",
   "displayName": "By Year",
   "resolverType": "year",
-  "contentType": "groups",
-  "yearHeaderMode": "perEpisode",
-  "customSort": {
-    "rules": [{ "field": "playlistNumber", "order": "descending" }]
+  "playlistStructure": "grouped",
+  "groupList": {
+    "yearBinding": "splitByYear",
+    "sort": {
+      "field": "playlistNumber",
+      "order": "descending"
+    }
   }
 }

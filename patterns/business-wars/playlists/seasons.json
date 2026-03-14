@@ -1,14 +1,23 @@
 {
-  "id": "seasons",
   "displayName": "Seasons",
-  "resolverType": "rss",
-  "showDateRange": true,
-  "showSeasonNumber": true,
-  "excludeFilter": "^(Best of Business Wars Daily|Encore: )",
+  "episodeFilters": {
+    "exclude": [
+      {
+        "title": "^(Best of Business Wars Daily|Encore: )"
+      }
+    ]
+  },
+  "groupList": {
+    "showDateRange": true
+  },
   "groups": [],
+  "id": "seasons",
+  "playlistStructure": "grouped",
+  "prependSeasonNumber": true,
+  "resolverType": "rss",
   "titleExtractor": {
-    "source": "title",
+    "group": 1,
     "pattern": "^(.*?) [-|] ",
-    "group": 1
+    "source": "title"
   }
 }
