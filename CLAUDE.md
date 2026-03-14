@@ -1,22 +1,36 @@
 # audiflow-smartplaylist
 
-Production smart playlist configuration data. Static JSON files deployed to GitHub Pages via CI on merge to main. The app fetches configs from `https://audiflow.github.io/audiflow-smartplaylist/`.
+Smart playlist configuration data for all environments. Static JSON files deployed to GitHub Pages via CI. The app fetches configs from `https://audiflow.github.io/audiflow-smartplaylist/`.
+
+## Branch and deployment model
+
+`main` holds infrastructure (workflows, docs, CODEOWNERS). Data lives on env/version branches:
+
+| Branch | Deploy path | URL |
+|--------|------------|-----|
+| `prod/v1` | `/assets/v1/` | `audiflow.github.io/audiflow-smartplaylist/assets/v1/` |
+| `prod/v2` | `/assets/v2/` | `audiflow.github.io/audiflow-smartplaylist/assets/v2/` |
+| `stg/v2` | `/assets-stg/v2/` | `audiflow.github.io/audiflow-smartplaylist/assets-stg/v2/` |
+| `dev/v2` | `/assets-dev/v2/` | `audiflow.github.io/audiflow-smartplaylist/assets-dev/v2/` |
+
+Branch flow per version: `dev/v{N}` -> PR -> `stg/v{N}` -> PR -> `prod/v{N}`
+
+Multiple schema versions can be served concurrently. Old versions remain deployable for bug fixes.
 
 ## Ecosystem context
 
-One of two data repos in the audiflow ecosystem (this is prod; `audiflow-smartplaylist-dev` is dev/staging). The `audiflow-smartplaylist-editor` web tool reads/writes these files locally; users commit and push. Schema SSoT lives in `audiflow-smartplaylist-dev/schema/`.
+The single data repo in the audiflow ecosystem (formerly split into prod and dev repos). The `audiflow-smartplaylist-editor` web tool reads/writes these files locally; users commit and push. Schema SSoT lives in `audiflow-smartplaylist-editor/crates/sp_core/assets/`.
 
 ## Responsibilities
 
-- Production playlist configurations (JSON under `patterns/`)
-- CI deployment to GitHub Pages (via `.github/workflows/bump-deploy-pages.yml`)
+- Playlist configurations for all environments (JSON under `patterns/`)
+- CI deployment to GitHub Pages (via `.github/workflows/deploy-pages.yml`)
 - Schema vendoring for local validation (`schema/`)
 
 ## Non-responsibilities
 
-- Schema definitions (owned by `audiflow-smartplaylist-dev`)
+- Schema definitions (owned by `audiflow-smartplaylist-editor`)
 - Config editing workflow (owned by editor)
-- Dev/staging data (owned by `audiflow-smartplaylist-dev`)
 - App-side consumption logic (owned by `audiflow`)
 
 ## File layout
@@ -51,6 +65,6 @@ schema/scripts/validate.sh patterns/**/*.json
 ## When changing this repository
 
 - All JSON must conform to schemas in `schema/`
-- Changes to `patterns/` deploy automatically on merge to main
-- Coordinate schema changes with `audiflow-smartplaylist-dev` first
+- Changes to `patterns/` deploy automatically on merge to the target branch
+- Schema SSoT is in the editor repo; vendor updated schemas into `schema/`
 - Check whether docs/specs/file-structure.md needs updating
