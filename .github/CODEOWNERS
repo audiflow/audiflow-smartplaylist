@@ -1,1 +1,6 @@
+# Default owner — all PRs require review from @reedom
 * @reedom
+
+# Governance files — only owner can approve changes
+.github/CODEOWNERS @reedom
+.github/workflows/ @reedom
