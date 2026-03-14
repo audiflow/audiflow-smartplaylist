@@ -9,12 +9,26 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
+      - name: Parse schema version from base branch
+        id: env
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          version="${BASE_REF#*/}"
+          if ! echo "$version" | grep -qE '^v[0-9]+$'; then
+            echo "::error::Cannot parse version from base branch '${BASE_REF}'"
+            exit 1
+          fi
+          echo "schema_version=${version}" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
 
       - name: Clone editor repo
+        env:
+          SCHEMA_VERSION: ${{ steps.env.outputs.schema_version }}
         run: |
-          git clone --depth 1 \
+          git clone --depth 1 --branch "$SCHEMA_VERSION" \
             https://github.com/audiflow/audiflow-smartplaylist-editor.git \
             /tmp/editor
 

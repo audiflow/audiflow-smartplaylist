@@ -42,6 +42,7 @@ jobs:
           fi
 
           echo "deploy_dir=${dir}/${version}" >> "$GITHUB_OUTPUT"
+          echo "schema_version=${version}" >> "$GITHUB_OUTPUT"
 
       # --- Checkout source ---
       - name: Checkout source
@@ -54,8 +55,10 @@ jobs:
       - uses: dart-lang/setup-dart@v1
 
       - name: Clone editor repo
+        env:
+          SCHEMA_VERSION: ${{ steps.env.outputs.schema_version }}
         run: |
-          git clone --depth 1 \
+          git clone --depth 1 --branch "$SCHEMA_VERSION" \
             https://github.com/audiflow/audiflow-smartplaylist-editor.git \
             /tmp/editor
 
