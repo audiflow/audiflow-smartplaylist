@@ -2,17 +2,20 @@
 
 Smart playlist configuration data for all environments. Static JSON files deployed to GitHub Pages via CI. The app fetches configs from `https://audiflow.github.io/audiflow-smartplaylist/`.
 
-## Environments
+## Branch and deployment model
+
+`main` holds infrastructure (workflows, docs, CODEOWNERS). Data lives on env/version branches:
 
 | Branch | Deploy path | URL |
 |--------|------------|-----|
-| `main` | `/assets/v{N}/` | `audiflow.github.io/audiflow-smartplaylist/assets/v{N}/` |
-| `staging` | `/assets-stg/v{N}/` | `audiflow.github.io/audiflow-smartplaylist/assets-stg/v{N}/` |
-| `dev` | `/assets-dev/v{N}/` | `audiflow.github.io/audiflow-smartplaylist/assets-dev/v{N}/` |
+| `prod/v1` | `/assets/v1/` | `audiflow.github.io/audiflow-smartplaylist/assets/v1/` |
+| `prod/v2` | `/assets/v2/` | `audiflow.github.io/audiflow-smartplaylist/assets/v2/` |
+| `stg/v2` | `/assets-stg/v2/` | `audiflow.github.io/audiflow-smartplaylist/assets-stg/v2/` |
+| `dev/v2` | `/assets-dev/v2/` | `audiflow.github.io/audiflow-smartplaylist/assets-dev/v2/` |
 
-`{N}` is read from `patterns/meta.json#schemaVersion` at deploy time. Old schema versions remain frozen on `gh-pages` — only the current version's directory is updated.
+Branch flow per version: `dev/v{N}` -> PR -> `stg/v{N}` -> PR -> `prod/v{N}`
 
-Branch flow: `dev` -> PR -> `staging` -> PR -> `main`
+Multiple schema versions can be served concurrently. Old versions remain deployable for bug fixes.
 
 ## Ecosystem context
 

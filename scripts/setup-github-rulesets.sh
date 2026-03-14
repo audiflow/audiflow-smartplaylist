@@ -18,7 +18,7 @@ gh api "repos/${REPO}/rulesets" \
   "enforcement": "active",
   "conditions": {
     "ref_name": {
-      "include": ["refs/heads/main", "refs/heads/dev", "refs/heads/staging"],
+      "include": ["refs/heads/main", "refs/heads/prod/*", "refs/heads/stg/*", "refs/heads/dev/*"],
       "exclude": []
     }
   },
@@ -66,7 +66,7 @@ gh api "repos/${REPO}/rulesets" \
   "enforcement": "active",
   "conditions": {
     "ref_name": {
-      "include": ["refs/heads/main", "refs/heads/dev", "refs/heads/staging"],
+      "include": ["refs/heads/main", "refs/heads/prod/*", "refs/heads/stg/*", "refs/heads/dev/*"],
       "exclude": []
     }
   },

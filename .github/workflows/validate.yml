@@ -2,7 +2,7 @@ name: Validate Configs
 
 on:
   pull_request:
-    branches: [main, dev, staging]
+    branches: ["prod/**", "stg/**", "dev/**"]
     paths: ["patterns/**.json"]
 
 jobs:
