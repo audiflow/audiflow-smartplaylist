@@ -4,7 +4,9 @@
 #
 # Usage: ./scripts/setup-github-rulesets.sh
 #
-# Bypass: repo admins (RepositoryRole ID 5) can bypass all rules.
+# Bypass actors:
+#   - RepositoryRole ID 5 (admin) — repo owner can bypass
+#   - audiflow-ci-bot (Integration) — CI can push version bumps
 # Validate check is NOT required in the ruleset — the workflow's
 # path filter ensures it runs only when patterns/**.json changes.
 
@@ -30,6 +32,11 @@ gh api "repos/${REPO}/rulesets" \
     {
       "actor_id": 5,
       "actor_type": "RepositoryRole",
+      "bypass_mode": "always"
+    },
+    {
+      "actor_id": 3096359,
+      "actor_type": "Integration",
       "bypass_mode": "always"
     }
   ],
