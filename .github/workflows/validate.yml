@@ -30,7 +30,7 @@ jobs:
         run: |
           gh release download "$SCHEMA_VERSION" \
             --repo audiflow/audiflow-smartplaylist-editor \
-            --pattern 'audiflow-editor-linux-x64' \
+            --pattern 'audiflow-editor-x86_64-unknown-linux-gnu' \
             --output /usr/local/bin/audiflow-editor
           chmod +x /usr/local/bin/audiflow-editor
 

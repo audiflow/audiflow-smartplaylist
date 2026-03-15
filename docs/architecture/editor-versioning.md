@@ -28,7 +28,7 @@ The data repo's deploy and validate workflows download the binary from the mutab
 - run: |
     gh release download v2 \
       --repo audiflow/audiflow-smartplaylist-editor \
-      --pattern 'audiflow-editor-linux-x64' \
+      --pattern 'audiflow-editor-x86_64-unknown-linux-gnu' \
       --output audiflow-editor
     chmod +x audiflow-editor
 - run: ./audiflow-editor validate patterns/
