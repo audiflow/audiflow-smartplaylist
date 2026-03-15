@@ -3,6 +3,10 @@
 # Requires: gh CLI authenticated with admin access.
 #
 # Usage: ./scripts/setup-github-rulesets.sh
+#
+# Bypass: repo admins (RepositoryRole ID 5) can bypass all rules.
+# Validate check is NOT required in the ruleset — the workflow's
+# path filter ensures it runs only when patterns/**.json changes.
 
 set -euo pipefail
 
@@ -22,8 +26,17 @@ gh api "repos/${REPO}/rulesets" \
       "exclude": []
     }
   },
-  "bypass_actors": [],
+  "bypass_actors": [
+    {
+      "actor_id": 5,
+      "actor_type": "RepositoryRole",
+      "bypass_mode": "always"
+    }
+  ],
   "rules": [
+    {
+      "type": "creation"
+    },
     {
       "type": "deletion"
     },
@@ -38,47 +51,6 @@ gh api "repos/${REPO}/rulesets" \
         "require_code_owner_review": true,
         "require_last_push_approval": false,
         "required_review_thread_resolution": true
-      }
-    },
-    {
-      "type": "required_status_checks",
-      "parameters": {
-        "strict_required_status_checks_policy": false,
-        "required_status_checks": [
-          {
-            "context": "validate"
-          }
-        ]
-      }
-    }
-  ]
-}
-EOF
-
-echo ""
-echo "=== Creating ruleset: governance-files ==="
-gh api "repos/${REPO}/rulesets" \
-  --method POST \
-  --input - <<'EOF'
-{
-  "name": "governance-files",
-  "target": "branch",
-  "enforcement": "active",
-  "conditions": {
-    "ref_name": {
-      "include": ["refs/heads/main", "refs/heads/prod/*", "refs/heads/stg/*", "refs/heads/dev/*"],
-      "exclude": []
-    }
-  },
-  "bypass_actors": [],
-  "rules": [
-    {
-      "type": "file_path_restriction",
-      "parameters": {
-        "restricted_file_paths": [
-          ".github/CODEOWNERS",
-          ".github/workflows/**"
-        ]
       }
     }
   ]
