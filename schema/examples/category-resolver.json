@@ -3,16 +3,26 @@
   "displayName": "Story Arcs",
   "resolverType": "category",
   "priority": 50,
-  "contentType": "groups",
-  "titleFilter": "(?:Main|Bonus)",
-  "excludeFilter": "(?:Trailer|Preview)",
+  "playlistStructure": "grouped",
+  "episodeFilters": {
+    "require": [
+      { "title": "(?:Main|Bonus)" }
+    ],
+    "exclude": [
+      { "title": "(?:Trailer|Preview)" }
+    ]
+  },
+  "groupList": {
+    "showDateRange": true
+  },
+  "episodeList": {
+    "showYearHeaders": true
+  },
   "groups": [
     {
       "id": "main",
       "displayName": "Main Episodes",
-      "pattern": "^Main\\b",
-      "episodeYearHeaders": true,
-      "showDateRange": true
+      "pattern": "^Main\\b"
     },
     {
       "id": "bonus",

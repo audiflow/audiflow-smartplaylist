@@ -3,23 +3,21 @@
   "displayName": "Seasons",
   "resolverType": "rss",
   "priority": 100,
-  "contentType": "groups",
-  "episodeYearHeaders": true,
-  "showDateRange": true,
+  "playlistStructure": "grouped",
   "nullSeasonGroupKey": 0,
-  "customSort": {
-    "rules": [
-      {
-        "field": "playlistNumber",
-        "order": "descending",
-        "condition": { "type": "sortKeyGreaterThan", "value": 0 }
-      },
-      { "field": "newestEpisodeDate", "order": "descending" }
-    ]
-  },
   "titleExtractor": {
     "source": "seasonNumber",
     "template": "Season {value}",
     "fallbackValue": "Specials"
+  },
+  "groupList": {
+    "showDateRange": true,
+    "sort": {
+      "field": "playlistNumber",
+      "order": "descending"
+    }
+  },
+  "episodeList": {
+    "showYearHeaders": true
   }
 }

@@ -65,7 +65,7 @@ jobs:
 
       - name: Bump versions
         working-directory: source
-        run: audiflow-editor bump-versions patterns HEAD~1
+        run: audiflow-editor bump-versions HEAD~1
 
       - name: Commit version bump
         working-directory: source
