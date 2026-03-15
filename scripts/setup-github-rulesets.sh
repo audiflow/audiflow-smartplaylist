@@ -3,15 +3,25 @@
 # Requires: gh CLI authenticated with admin access.
 #
 # Usage: ./scripts/setup-github-rulesets.sh
+#
+# NOTE: file_path_restriction (governance-files ruleset) requires
+# GitHub Enterprise. On free/public repos, CODEOWNERS + require_code_owner_review
+# provides equivalent protection since * @reedom covers all files.
 
 set -euo pipefail
 
 REPO="audiflow/audiflow-smartplaylist"
 
+# Look up the bypass actor's GitHub user ID
+OWNER_LOGIN="reedom"
+OWNER_ID=$(gh api "users/${OWNER_LOGIN}" --jq '.id')
+echo "Resolved @${OWNER_LOGIN} -> user ID ${OWNER_ID}"
+
+echo ""
 echo "=== Creating ruleset: base-branches ==="
 gh api "repos/${REPO}/rulesets" \
   --method POST \
-  --input - <<'EOF'
+  --input - <<EOF
 {
   "name": "base-branches",
   "target": "branch",
@@ -22,8 +32,17 @@ gh api "repos/${REPO}/rulesets" \
       "exclude": []
     }
   },
-  "bypass_actors": [],
+  "bypass_actors": [
+    {
+      "actor_id": ${OWNER_ID},
+      "actor_type": "User",
+      "bypass_mode": "always"
+    }
+  ],
   "rules": [
+    {
+      "type": "creation"
+    },
     {
       "type": "deletion"
     },
@@ -48,36 +67,6 @@ gh api "repos/${REPO}/rulesets" \
           {
             "context": "validate"
           }
-        ]
-      }
-    }
-  ]
-}
-EOF
-
-echo ""
-echo "=== Creating ruleset: governance-files ==="
-gh api "repos/${REPO}/rulesets" \
-  --method POST \
-  --input - <<'EOF'
-{
-  "name": "governance-files",
-  "target": "branch",
-  "enforcement": "active",
-  "conditions": {
-    "ref_name": {
-      "include": ["refs/heads/main", "refs/heads/prod/*", "refs/heads/stg/*", "refs/heads/dev/*"],
-      "exclude": []
-    }
-  },
-  "bypass_actors": [],
-  "rules": [
-    {
-      "type": "file_path_restriction",
-      "parameters": {
-        "restricted_file_paths": [
-          ".github/CODEOWNERS",
-          ".github/workflows/**"
         ]
       }
     }
