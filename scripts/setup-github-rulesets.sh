@@ -4,24 +4,18 @@
 #
 # Usage: ./scripts/setup-github-rulesets.sh
 #
-# NOTE: file_path_restriction (governance-files ruleset) requires
-# GitHub Enterprise. On free/public repos, CODEOWNERS + require_code_owner_review
-# provides equivalent protection since * @reedom covers all files.
+# Bypass: repo admins (RepositoryRole ID 5) can bypass all rules.
+# Validate check is NOT required in the ruleset — the workflow's
+# path filter ensures it runs only when patterns/**.json changes.
 
 set -euo pipefail
 
 REPO="audiflow/audiflow-smartplaylist"
 
-# Look up the bypass actor's GitHub user ID
-OWNER_LOGIN="reedom"
-OWNER_ID=$(gh api "users/${OWNER_LOGIN}" --jq '.id')
-echo "Resolved @${OWNER_LOGIN} -> user ID ${OWNER_ID}"
-
-echo ""
 echo "=== Creating ruleset: base-branches ==="
 gh api "repos/${REPO}/rulesets" \
   --method POST \
-  --input - <<EOF
+  --input - <<'EOF'
 {
   "name": "base-branches",
   "target": "branch",
@@ -34,8 +28,8 @@ gh api "repos/${REPO}/rulesets" \
   },
   "bypass_actors": [
     {
-      "actor_id": ${OWNER_ID},
-      "actor_type": "User",
+      "actor_id": 5,
+      "actor_type": "RepositoryRole",
       "bypass_mode": "always"
     }
   ],
@@ -57,17 +51,6 @@ gh api "repos/${REPO}/rulesets" \
         "require_code_owner_review": true,
         "require_last_push_approval": false,
         "required_review_thread_resolution": true
-      }
-    },
-    {
-      "type": "required_status_checks",
-      "parameters": {
-        "strict_required_status_checks_policy": false,
-        "required_status_checks": [
-          {
-            "context": "validate"
-          }
-        ]
       }
     }
   ]
