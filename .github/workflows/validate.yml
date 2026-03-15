@@ -22,21 +22,17 @@ jobs:
           echo "schema_version=${version}" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v4
-      - uses: dart-lang/setup-dart@v1
 
-      - name: Clone editor repo
+      - name: Download sp-cli
         env:
           SCHEMA_VERSION: ${{ steps.env.outputs.schema_version }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git clone --depth 1 --branch "$SCHEMA_VERSION" \
-            https://github.com/audiflow/audiflow-smartplaylist-editor.git \
-            /tmp/editor
-
-      - name: Install dependencies
-        working-directory: /tmp/editor
-        run: dart pub get
+          gh release download "$SCHEMA_VERSION" \
+            --repo audiflow/audiflow-smartplaylist-editor \
+            --pattern 'sp-cli-linux-x64' \
+            --output /usr/local/bin/sp-cli
+          chmod +x /usr/local/bin/sp-cli
 
       - name: Validate configs
-        run: |
-          dart run /tmp/editor/packages/sp_cli/bin/validate.dart \
-            $GITHUB_WORKSPACE/patterns
+        run: sp-cli validate $GITHUB_WORKSPACE/patterns

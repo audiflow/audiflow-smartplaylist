@@ -52,25 +52,20 @@ jobs:
           path: source
 
       # --- Version Bump ---
-      - uses: dart-lang/setup-dart@v1
-
-      - name: Clone editor repo
+      - name: Download sp-cli
         env:
           SCHEMA_VERSION: ${{ steps.env.outputs.schema_version }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git clone --depth 1 --branch "$SCHEMA_VERSION" \
-            https://github.com/audiflow/audiflow-smartplaylist-editor.git \
-            /tmp/editor
-
-      - name: Install editor dependencies
-        working-directory: /tmp/editor
-        run: dart pub get
+          gh release download "$SCHEMA_VERSION" \
+            --repo audiflow/audiflow-smartplaylist-editor \
+            --pattern 'sp-cli-linux-x64' \
+            --output /usr/local/bin/sp-cli
+          chmod +x /usr/local/bin/sp-cli
 
       - name: Bump versions
         working-directory: source
-        run: |
-          dart run /tmp/editor/packages/sp_cli/bin/bump_versions.dart \
-            patterns HEAD~1
+        run: sp-cli bump-versions patterns HEAD~1
 
       - name: Commit version bump
         working-directory: source
