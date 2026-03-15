@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   bump-and-deploy:
-    if: github.actor != 'github-actions[bot]'
+    if: github.actor != 'audiflow-ci-bot[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Parse branch name
@@ -44,12 +44,21 @@ jobs:
           echo "deploy_dir=${dir}/${version}" >> "$GITHUB_OUTPUT"
           echo "schema_version=${version}" >> "$GITHUB_OUTPUT"
 
+      # --- Generate App token for pushing to protected branches ---
+      - name: Generate CI bot token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.CI_BOT_APP_ID }}
+          private-key: ${{ secrets.CI_BOT_PRIVATE_KEY }}
+
       # --- Checkout source ---
       - name: Checkout source
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
           path: source
+          token: ${{ steps.app-token.outputs.token }}
 
       # --- Version Bump ---
       - name: Download audiflow-editor
@@ -70,8 +79,8 @@ jobs:
       - name: Commit version bump
         working-directory: source
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "audiflow-ci-bot[bot]"
+          git config user.email "audiflow-ci-bot[bot]@users.noreply.github.com"
           git add patterns/
           git diff --cached --quiet || git commit -m "chore: bump versions"
           git push
@@ -83,21 +92,22 @@ jobs:
         with:
           ref: gh-pages
           path: gh-pages
+          token: ${{ steps.app-token.outputs.token }}
         continue-on-error: true
 
       - name: Initialize gh-pages if needed
         if: steps.checkout-ghpages.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
           mkdir -p gh-pages && cd gh-pages
           git init -b gh-pages
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "audiflow-ci-bot[bot]"
+          git config user.email "audiflow-ci-bot[bot]@users.noreply.github.com"
           git commit --allow-empty -m "chore: initialize gh-pages"
           git remote add origin \
-            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          GITHUB_REPOSITORY: ${{ github.repository }}
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: Sync patterns to deploy directory
         env:
@@ -114,8 +124,8 @@ jobs:
           DEPLOY_DIR: ${{ steps.env.outputs.deploy_dir }}
           BRANCH: ${{ github.ref_name }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "audiflow-ci-bot[bot]"
+          git config user.email "audiflow-ci-bot[bot]@users.noreply.github.com"
           git add .
           git diff --cached --quiet && echo "No changes to deploy" && exit 0
           git commit -m "deploy: update ${DEPLOY_DIR} from ${BRANCH}"
