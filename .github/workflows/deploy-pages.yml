@@ -52,20 +52,20 @@ jobs:
           path: source
 
       # --- Version Bump ---
-      - name: Download sp-cli
+      - name: Download audiflow-editor
         env:
           SCHEMA_VERSION: ${{ steps.env.outputs.schema_version }}
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release download "$SCHEMA_VERSION" \
             --repo audiflow/audiflow-smartplaylist-editor \
-            --pattern 'sp-cli-linux-x64' \
-            --output /usr/local/bin/sp-cli
-          chmod +x /usr/local/bin/sp-cli
+            --pattern 'audiflow-editor-linux-x64' \
+            --output /usr/local/bin/audiflow-editor
+          chmod +x /usr/local/bin/audiflow-editor
 
       - name: Bump versions
         working-directory: source
-        run: sp-cli bump-versions patterns HEAD~1
+        run: audiflow-editor bump-versions patterns HEAD~1
 
       - name: Commit version bump
         working-directory: source

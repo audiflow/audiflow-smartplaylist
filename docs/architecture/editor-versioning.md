@@ -4,7 +4,7 @@ The data repo's CI uses pre-compiled editor CLI binaries for validation and vers
 
 ## Binary release model
 
-The editor publishes `sp-cli` binaries via GitHub Releases using two tag types:
+The editor publishes `audiflow-editor` binaries via GitHub Releases using two tag types:
 
 | Tag | Type | Example | Purpose |
 |-----|------|---------|---------|
@@ -15,7 +15,7 @@ This follows the same convention as GitHub Actions (e.g., `actions/checkout@v4`)
 
 ### Editor release workflow
 
-1. `dart compile exe` produces `sp-cli` for linux-x64
+1. `dart compile exe` produces `audiflow-editor` for linux-x64
 2. Create GitHub Release for the immutable tag (`v2.1.0`) with binary attached
 3. Move the mutable `v2` tag to the new commit
 4. Update the `v2` release to attach the latest binary
@@ -28,11 +28,11 @@ The data repo's deploy and validate workflows download the binary from the mutab
 - run: |
     gh release download v2 \
       --repo audiflow/audiflow-smartplaylist-editor \
-      --pattern 'sp-cli-linux-x64' \
-      --output sp-cli
-    chmod +x sp-cli
-- run: ./sp-cli validate patterns/
-- run: ./sp-cli bump-versions patterns/ HEAD~1
+      --pattern 'audiflow-editor-linux-x64' \
+      --output audiflow-editor
+    chmod +x audiflow-editor
+- run: ./audiflow-editor validate patterns/
+- run: ./audiflow-editor bump-versions patterns/ HEAD~1
 ```
 
 No Dart SDK, no clone, no `pub get` required.
