@@ -10,7 +10,8 @@ their first pull request can be merged. This is a one-time process.
 
 **Why do we require a CLA?**
 
-The audiflow project uses AGPL-3.0 for code and CC BY-SA 4.0 for data. The CLA
+The audiflow ecosystem uses AGPL-3.0 for code repositories and CC BY-SA 4.0 for
+data repositories (this repo contains only data). The CLA
 ensures that the project maintainer can continue to offer the project under these
 licenses and, in the future, potentially under additional commercial licenses.
 Without a CLA, every contributor retains copyright over their contributions,
