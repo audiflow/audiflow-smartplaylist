@@ -1,0 +1,13 @@
+{
+  "displayName": "その他",
+  "episodeFilters": {
+    "exclude": [
+      {
+        "title": "（.*?）|\\(.*?\\)"
+      }
+    ]
+  },
+  "id": "others",
+  "playlistStructure": "grouped",
+  "resolverType": "year"
+}
