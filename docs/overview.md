@@ -22,7 +22,7 @@ audiflow-smartplaylist is the production configuration data repository for the a
 
 - **Pattern**: A podcast-specific configuration bundle. Each pattern maps to one podcast via feed URL or GUID matching. Directory: `patterns/{patternId}/`.
 - **Playlist definition**: A single JSON file describing how to group and display episodes for one playlist within a pattern. Located at `patterns/{patternId}/playlists/{playlistId}.json`.
-- **Resolver type**: The algorithm a playlist uses to group episodes. Valid values: `seasonNumber`, `category`, `year`, `titleAppearanceOrder`.
+- **Resolver type**: The algorithm a playlist uses to group episodes. Valid values: `seasonNumber`, `year`, `titleDiscovery`, `titleClassifier`.
 - **Root index** (`patterns/meta.json`): Discovery file listing all patterns with summary info. The app fetches this first.
 - **Pattern meta** (`{patternId}/meta.json`): Per-pattern file with feed matching rules and ordered playlist IDs.
 - **dataVersion**: Monotonically increasing integer bumped by CI when data changes. Used by the app for cache invalidation.

@@ -1,7 +1,7 @@
 {
   "id": "story-arcs",
   "displayName": "Story Arcs",
-  "resolverType": "titleAppearanceOrder",
+  "resolverType": "titleDiscovery",
   "playlistStructure": "grouped",
   "episodeFilters": {
     "require": [

@@ -228,5 +228,5 @@
   "id": "extras",
   "playlistStructure": "grouped",
   "priority": 30,
-  "resolverType": "category"
+  "resolverType": "titleClassifier"
 }

@@ -47,7 +47,7 @@ Group names (the theme of a multi-episode series) are extracted from titles:
 
 ### extras
 
-No automated episode extraction. Uses `category` resolver -- episodes are matched to groups by regexp against their title, not by RSS metadata.
+No automated episode extraction. Uses `titleClassifier` resolver -- episodes are matched to groups by regexp against their title.
 
 ## Grouping decisions
 

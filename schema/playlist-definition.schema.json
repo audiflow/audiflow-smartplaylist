@@ -28,16 +28,16 @@
           "description": "Groups episodes by season number. The season number is determined by episodeExtractor (parsing from title or description) if configured, falling back to RSS metadata (itunes:season tag). Each distinct season number becomes a separate group. Episodes without a season number are handled by nullSeasonGroupKey (assigned to a fallback group) or left ungrouped. Best for podcasts with season-based structure, whether seasons are encoded in titles or tagged in RSS. Supports: nullSeasonGroupKey, titleExtractor, episodeExtractor."
         },
         {
-          "const": "category",
-          "description": "Groups episodes by matching their titles against regex patterns defined in the groups array. Groups are evaluated in order; the first matching pattern claims each episode. A group without a pattern acts as a catch-all for unmatched episodes. Best for podcasts with naming conventions like '[Series A] Episode 1' or 'Arc 1: Title'. Requires: groups. Does not use titleExtractor (group display names come from GroupDef.displayName)."
-        },
-        {
           "const": "year",
           "description": "Groups episodes by their publication year (publishedAt field). Each distinct year becomes a separate group, sorted by year descending by default (newest first). Best for long-running podcasts where yearly grouping provides natural navigation. Supports: titleExtractor, episodeExtractor."
         },
         {
-          "const": "titleAppearanceOrder",
+          "const": "titleDiscovery",
           "description": "Groups episodes by a recurring pattern extracted from their titles, ordered by when each unique pattern first appears in the feed (sorted by publication date). Uses titleExtractor or the first group's pattern to extract group names. Best for podcasts with titled story arcs or recurring series. Supports: titleExtractor (primary), groups[0].pattern (fallback for extraction)."
+        },
+        {
+          "const": "titleClassifier",
+          "description": "Groups episodes by matching their titles against regex patterns defined in the groups array. Groups are evaluated in order; the first matching pattern claims each episode. A group without a pattern acts as a catch-all for unmatched episodes. Best for podcasts with naming conventions like '[Series A] Episode 1' or 'Arc 1: Title'. Requires: groups. Does not use titleExtractor (group display names come from GroupDef.displayName)."
         }
       ]
     },
@@ -154,7 +154,7 @@
   "if": {
     "properties": {
       "resolverType": {
-        "const": "category"
+        "const": "titleClassifier"
       }
     },
     "required": [

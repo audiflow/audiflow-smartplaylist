@@ -81,9 +81,9 @@ Valid `resolverType` values:
 | Resolver | Grouping strategy | Key fields |
 |----------|-------------------|------------|
 | `seasonNumber` | By season number (from episodeExtractor or RSS metadata) | `nullSeasonGroupKey`, `titleExtractor`, `episodeExtractor` |
-| `category` | By title regex patterns in `groups` array | `groups` (required) |
-| `year` | By publication year | `titleExtractor`, `smartPlaylistEpisodeExtractor` |
-| `titleAppearanceOrder` | By recurring title pattern, ordered by first appearance | `titleExtractor`, `groups[0].pattern` (fallback) |
+| `year` | By publication year | `titleExtractor`, `episodeExtractor` |
+| `titleDiscovery` | By recurring title pattern, ordered by first appearance | `titleExtractor`, `groups[0].pattern` (fallback) |
+| `titleClassifier` | By title regex patterns in `groups` array | `groups` (required) |
 
 See `schema/playlist-definition.schema.json` for complete field definitions.
 
@@ -123,8 +123,8 @@ The result is a 12-character lowercase hex string (48 bits). The editor enforces
 
 - Missing required fields in any JSON file
 - `id` mismatch between filename/directory and field value
-- `resolverType` value not in `[seasonNumber, category, year, titleAppearanceOrder]`
-- `category` resolver without a `groups` array
+- `resolverType` value not in `[seasonNumber, titleClassifier, year, titleDiscovery]`
+- `titleClassifier` resolver without a `groups` array
 - `dataVersion` or `playlistCount` mismatch between root index and pattern meta
 - Additional properties not defined in the schema (all schemas use `additionalProperties: false`)
 
