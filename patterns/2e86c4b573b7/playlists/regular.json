@@ -1,6 +1,6 @@
 {
   "displayName": "レギュラーシリーズ",
-  "episodeExtractor": {
+  "numberingExtractor": {
     "episodeGroup": 2,
     "fallbackEpisodePattern": "(\\d+)】",
     "fallbackSeasonNumber": 0,

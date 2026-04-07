@@ -18,7 +18,7 @@
 
 **Why:** `yearHeaderMode` described the UI mechanism (headers) rather than the relationship (how groups bind to years). `perEpisode` was misleading -- the behavior is splitting a group across multiple years, parallel to `playlistStructure: split`. `firstEpisode` was unclear about what "first" meant; `pinToYear` clearly says the group anchors to one year.
 
-### Renamed: `smartPlaylistEpisodeExtractor` -> `episodeExtractor`
+### Renamed: `smartPlaylistEpisodeExtractor` -> `numberingExtractor`
 
 **Why:** Shorter, clearer. The `smartPlaylist` prefix was redundant since the entire schema is about smart playlists.
 
@@ -60,7 +60,7 @@ where `EpisodeFilterEntry` is `{ title?: string, description?: string }`
 **New fields in GroupDef:**
 - `display` object: `showDateRange`, `yearBinding` (overrides groupList defaults)
 - `episodeList` object: `showYearHeaders`, `sort`, `titleExtractor` (overrides definition-level episodeList)
-- `episodeExtractor` (overrides definition-level episodeExtractor)
+- `numberingExtractor` (overrides definition-level numberingExtractor)
 
 **Removed from GroupDef:** `episodeYearHeaders`, `showDateRange` (replaced by nested `display` and `episodeList` objects)
 
@@ -140,12 +140,12 @@ where `EpisodeFilterEntry` is `{ title?: string, description?: string }`
 | `showSeasonNumber` | `prependSeasonNumber` |
 | `showSortOrderToggle` | `groupList.userSortable` (default: true) |
 | `episodeYearHeaders` | `episodeList.showYearHeaders` |
-| `smartPlaylistEpisodeExtractor` | `episodeExtractor` |
+| `smartPlaylistEpisodeExtractor` | `numberingExtractor` |
 | `SortRule.field: "progress"` | (removed -- runtime concern) |
 | `GroupDef.episodeYearHeaders` | `GroupDef.episodeList.showYearHeaders` |
 | `GroupDef.showDateRange` | `GroupDef.display.showDateRange` |
 | (new) | `GroupDef.display.yearBinding` |
-| (new) | `GroupDef.episodeExtractor` |
+| (new) | `GroupDef.numberingExtractor` |
 | (new) | `episodeList.sort` (EpisodeSortRule) |
 | (new) | `episodeList.titleExtractor` (TitleExtractor) |
 | (new) | `GroupDef.episodeList.sort` |

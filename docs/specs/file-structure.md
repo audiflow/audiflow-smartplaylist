@@ -80,8 +80,8 @@ Valid `resolverType` values:
 
 | Resolver | Grouping strategy | Key fields |
 |----------|-------------------|------------|
-| `seasonNumber` | By season number (from episodeExtractor or RSS metadata) | `nullSeasonGroupKey`, `titleExtractor`, `episodeExtractor` |
-| `year` | By publication year | `titleExtractor`, `episodeExtractor` |
+| `seasonNumber` | By season number (from numberingExtractor or RSS metadata) | `nullSeasonGroupKey`, `titleExtractor`, `numberingExtractor` |
+| `year` | By publication year | `titleExtractor`, `numberingExtractor` |
 | `titleDiscovery` | By recurring title pattern, ordered by first appearance | `titleExtractor`, `groups[0].pattern` (fallback) |
 | `titleClassifier` | By title regex patterns in `groups` array | `groups` (required) |
 
