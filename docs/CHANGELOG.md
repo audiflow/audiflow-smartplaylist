@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [v3] - 2026-04-08
+
+### Added
+
+- Pattern 9d1626c9a46b (東京ビジネスハブ) with person and others playlists
+
 ## [v3] - 2026-04-04
 
 ### Changed
