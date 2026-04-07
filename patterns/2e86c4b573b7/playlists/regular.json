@@ -34,7 +34,7 @@
   "nullSeasonGroupKey": 0,
   "playlistStructure": "grouped",
   "priority": 10,
-  "resolverType": "rss",
+  "resolverType": "seasonNumber",
   "titleExtractor": {
     "fallback": {
       "group": 1,

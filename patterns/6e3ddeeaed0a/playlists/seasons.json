@@ -14,7 +14,7 @@
   "id": "seasons",
   "playlistStructure": "grouped",
   "prependSeasonNumber": true,
-  "resolverType": "rss",
+  "resolverType": "seasonNumber",
   "titleExtractor": {
     "group": 1,
     "pattern": "^(.*?) [-|] ",

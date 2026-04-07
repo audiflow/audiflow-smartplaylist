@@ -32,7 +32,7 @@
   "nullSeasonGroupKey": 0,
   "playlistStructure": "grouped",
   "priority": 20,
-  "resolverType": "rss",
+  "resolverType": "seasonNumber",
   "titleExtractor": {
     "fallback": {
       "pattern": "【COTEN RADIOショート\\s+(.+?)\\s*(\\d+|前編|中編|後編)】",

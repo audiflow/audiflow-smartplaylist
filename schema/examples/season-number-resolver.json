@@ -1,7 +1,7 @@
 {
   "id": "seasons",
   "displayName": "Seasons",
-  "resolverType": "rss",
+  "resolverType": "seasonNumber",
   "priority": 100,
   "playlistStructure": "grouped",
   "nullSeasonGroupKey": 0,

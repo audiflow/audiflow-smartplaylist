@@ -17,7 +17,7 @@ usage() {
   echo "Examples:"
   echo "  schema/scripts/validate.sh patterns/meta.json                          # auto-detects as index"
   echo "  schema/scripts/validate.sh --pattern-meta patterns/coten_radio/meta.json"
-  echo "  schema/scripts/validate.sh --playlist schema/examples/rss-resolver.json"
+  echo "  schema/scripts/validate.sh --playlist schema/examples/season-number-resolver.json"
   echo "  schema/scripts/validate.sh --playlist schema/examples/*.json"
 }
 

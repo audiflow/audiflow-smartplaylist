@@ -24,8 +24,8 @@
       "description": "Determines the algorithm used to group episodes into playlists. Each resolver interprets the episode data differently and supports different configuration fields.",
       "oneOf": [
         {
-          "const": "rss",
-          "description": "Groups episodes by their iTunes season number from RSS feed metadata (itunes:season tag). Each distinct season number becomes a separate group. Episodes without a season number are handled by nullSeasonGroupKey (assigned to a fallback group) or left ungrouped. Best for podcasts that properly tag seasons in their RSS feed. Supports: nullSeasonGroupKey, titleExtractor, episodeExtractor."
+          "const": "seasonNumber",
+          "description": "Groups episodes by season number. The season number is determined by episodeExtractor (parsing from title or description) if configured, falling back to RSS metadata (itunes:season tag). Each distinct season number becomes a separate group. Episodes without a season number are handled by nullSeasonGroupKey (assigned to a fallback group) or left ungrouped. Best for podcasts with season-based structure, whether seasons are encoded in titles or tagged in RSS. Supports: nullSeasonGroupKey, titleExtractor, episodeExtractor."
         },
         {
           "const": "category",
