@@ -2,7 +2,7 @@
   "id": "story-arcs",
   "displayName": "Story Arcs",
   "resolverType": "titleDiscovery",
-  "playlistStructure": "grouped",
+  "presentation": "combined",
   "episodeFilters": {
     "require": [
       { "title": "\\[.+\\]" }

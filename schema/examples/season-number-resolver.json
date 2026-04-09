@@ -3,7 +3,7 @@
   "displayName": "Seasons",
   "resolverType": "seasonNumber",
   "priority": 100,
-  "playlistStructure": "grouped",
+  "presentation": "combined",
   "nullSeasonGroupKey": 0,
   "titleExtractor": {
     "source": "seasonNumber",

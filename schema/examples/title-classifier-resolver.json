@@ -3,7 +3,7 @@
   "displayName": "Story Arcs",
   "resolverType": "titleClassifier",
   "priority": 50,
-  "playlistStructure": "grouped",
+  "presentation": "combined",
   "episodeFilters": {
     "require": [
       { "title": "(?:Main|Bonus)" }
