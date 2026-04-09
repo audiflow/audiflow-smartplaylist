@@ -3,7 +3,6 @@
   "displayName": "Seasons",
   "resolverType": "seasonNumber",
   "presentation": "combined",
-  "nullSeasonGroupKey": 0,
   "titleExtractor": {
     "source": "seasonNumber",
     "template": "Season {value}",

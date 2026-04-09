@@ -8,6 +8,10 @@
 
 **Why:** The pair `split`/`grouped` lacked a coherent naming axis -- `split` described an action while `grouped` described a state. The new names sit on a clear presentation axis: `separate` means each resolver result is presented as its own playlist (selectable from a dropdown); `combined` means all results are presented as group cards inside a single playlist. The field name `presentation` reflects that this controls how results appear to the user, not internal structure.
 
+### Removed: `nullSeasonGroupKey`
+
+**Why:** Episodes without a season number naturally fall through to a fallback definition. The explicit group key assignment added complexity without value -- the fallback mechanism already handles this case.
+
 ### Removed: `priority`
 
 **Why:** The app does not use priority as described in the schema. Episode claiming order is determined by whether a definition has filters (filtered definitions process first, filter-less fallbacks process second), not by a numeric priority value.

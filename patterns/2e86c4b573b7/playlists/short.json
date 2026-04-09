@@ -29,7 +29,6 @@
     "yearBinding": "pinToYear"
   },
   "id": "short",
-  "nullSeasonGroupKey": 0,
   "presentation": "combined",
   "resolverType": "seasonNumber",
   "titleExtractor": {

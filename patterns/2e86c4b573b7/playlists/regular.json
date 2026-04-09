@@ -31,7 +31,6 @@
     "yearBinding": "pinToYear"
   },
   "id": "regular",
-  "nullSeasonGroupKey": 0,
   "presentation": "combined",
   "resolverType": "seasonNumber",
   "titleExtractor": {
