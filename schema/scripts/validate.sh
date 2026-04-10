@@ -2,102 +2,88 @@
 set -euo pipefail
 
 SCHEMA_DIR="$(cd "$(dirname "$0")/.." >/dev/null && pwd)"
+REPO_ROOT="$(cd "$SCHEMA_DIR/.." >/dev/null && pwd)"
+VERSION_FILE="$SCHEMA_DIR/VERSION"
+CACHE_DIR="$REPO_ROOT/.cache/bin"
 
 usage() {
-  echo "Usage: schema/scripts/validate.sh [--playlist | --index | --pattern-meta] <config.json> [config2.json ...]"
+  echo "Usage: schema/scripts/validate.sh [patterns_dir]"
   echo ""
-  echo "Validates JSON config files against the smart playlist schema."
+  echo "Validates JSON config files using the audiflow-editor binary"
+  echo "matched to the schema version in schema/VERSION."
   echo ""
-  echo "Options:"
-  echo "  --playlist      Validate as individual playlist definitions"
-  echo "  --index         Validate as root pattern index (patterns/meta.json)"
-  echo "  --pattern-meta  Validate as per-pattern meta ({patternId}/meta.json)"
-  echo "  (default)       Auto-detects meta.json files; others validate as playlist"
+  echo "Arguments:"
+  echo "  patterns_dir  Path to patterns directory (default: patterns/)"
+  echo ""
+  echo "The script downloads the correct audiflow-editor binary if not"
+  echo "already cached in .cache/bin/."
   echo ""
   echo "Examples:"
-  echo "  schema/scripts/validate.sh patterns/meta.json                          # auto-detects as index"
-  echo "  schema/scripts/validate.sh --pattern-meta patterns/coten_radio/meta.json"
-  echo "  schema/scripts/validate.sh --playlist schema/examples/season-number-resolver.json"
-  echo "  schema/scripts/validate.sh --playlist schema/examples/*.json"
+  echo "  schema/scripts/validate.sh"
+  echo "  schema/scripts/validate.sh patterns/"
 }
 
-MODE=""
-
-if [ $# -eq 0 ]; then
+if [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
   usage
+  exit 0
+fi
+
+if [ ! -f "$VERSION_FILE" ]; then
+  echo "error: schema/VERSION not found" >&2
   exit 1
 fi
 
-case "${1:-}" in
-  --playlist)
-    MODE="playlist"
-    shift
-    ;;
-  --index)
-    MODE="index"
-    shift
-    ;;
-  --pattern-meta)
-    MODE="pattern-meta"
-    shift
-    ;;
-esac
+SCHEMA_VERSION="v$(cat "$VERSION_FILE" | tr -d '[:space:]')"
+PATTERNS_DIR="${1:-$REPO_ROOT/patterns}"
 
-if [ $# -eq 0 ]; then
-  usage
+if [ ! -d "$PATTERNS_DIR" ]; then
+  echo "error: patterns directory not found: $PATTERNS_DIR" >&2
   exit 1
 fi
 
-schema_for_mode() {
-  case "$1" in
-    index)        echo "${SCHEMA_DIR}/pattern-index.schema.json" ;;
-    pattern-meta) echo "${SCHEMA_DIR}/pattern-meta.schema.json" ;;
-    *)            echo "${SCHEMA_DIR}/playlist-definition.schema.json" ;;
+# Detect platform
+detect_binary_name() {
+  local os arch
+  os="$(uname -s)"
+  arch="$(uname -m)"
+
+  case "$os" in
+    Linux)
+      case "$arch" in
+        x86_64)  echo "audiflow-editor-x86_64-unknown-linux-gnu" ;;
+        aarch64) echo "audiflow-editor-aarch64-unknown-linux-gnu" ;;
+        *)       echo "error: unsupported architecture: $arch" >&2; exit 1 ;;
+      esac
+      ;;
+    Darwin)
+      case "$arch" in
+        x86_64)  echo "audiflow-editor-x86_64-apple-darwin" ;;
+        arm64)   echo "audiflow-editor-aarch64-apple-darwin" ;;
+        *)       echo "error: unsupported architecture: $arch" >&2; exit 1 ;;
+      esac
+      ;;
+    *)
+      echo "error: unsupported OS: $os" >&2
+      exit 1
+      ;;
   esac
 }
 
-detect_mode() {
-  local file="$1"
-  local basename
-  basename="$(basename "$file")"
+BINARY_NAME="$(detect_binary_name)"
+EDITOR_BIN="$CACHE_DIR/$SCHEMA_VERSION/$BINARY_NAME"
 
-  if [ -n "$MODE" ]; then
-    echo "$MODE"
-    return
-  fi
-
-  if [ "$basename" = "meta.json" ]; then
-    if python3 -c "
-import json, sys
-data = json.load(open(sys.argv[1]))
-sys.exit(0 if 'schemaVersion' in data else 1)
-" "$file" 2>/dev/null; then
-      echo "index"
-    else
-      echo "pattern-meta"
-    fi
-  else
-    echo "playlist"
-  fi
-}
-
-errors=0
-for file in "$@"; do
-  file_mode="$(detect_mode "$file")"
-  schema="$(schema_for_mode "$file_mode")"
-  echo "Validating ($file_mode): $file"
-  if uv run --with check-jsonschema \
-    check-jsonschema --schemafile "$schema" "$file" 2>&1; then
-    echo "  ok"
-  else
-    errors=$((errors + 1))
-  fi
+# Download if not cached
+if [ ! -x "$EDITOR_BIN" ]; then
+  echo "Downloading audiflow-editor $SCHEMA_VERSION..."
+  mkdir -p "$CACHE_DIR/$SCHEMA_VERSION"
+  gh release download "$SCHEMA_VERSION" \
+    --repo audiflow/audiflow-smartplaylist-editor \
+    --pattern "$BINARY_NAME" \
+    --output "$EDITOR_BIN"
+  chmod +x "$EDITOR_BIN"
   echo ""
-done
-
-if [ $errors -eq 0 ]; then
-  echo "All files valid."
-else
-  echo "$errors file(s) failed validation."
-  exit 1
 fi
+
+echo "Validating with audiflow-editor $SCHEMA_VERSION"
+echo ""
+exec "$EDITOR_BIN" validate "$PATTERNS_DIR"
