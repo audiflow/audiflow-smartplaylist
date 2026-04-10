@@ -164,7 +164,7 @@ git commit -m "docs: add CHANGELOG entry for playlistStructure -> presentation r
 
 - [ ] **Step 1: Run full validation**
 
-Run: `schema/scripts/validate.sh patterns/**/*.json`
+Run: `schema/scripts/validate.sh patterns/`
 Expected: All files pass validation
 
 - [ ] **Step 2: Verify no stale references remain**

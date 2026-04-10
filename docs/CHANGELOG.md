@@ -10,11 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Pattern 9d1626c9a46b (東京ビジネスハブ) with person and others playlists
 
-## [v3] - 2026-04-04
+### Changed (2026-04-04)
 
-### Changed
-
-- Migrate pattern IDs to content-hash (SHA-256) identifiers
+- Migrate pattern IDs to content-hash (MD5) identifiers
 - Bump schema `$id` URIs from v2 to v3
 - Bump `schemaVersion` to 3
 

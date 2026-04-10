@@ -47,7 +47,7 @@ where `EpisodeFilterEntry` is `{ title?: string, description?: string }`
 **Why:**
 - The three original fields were mathematically redundant (`titleFilter` and `requireFilter` are the same operation). Unifying into `require`/`exclude` arrays eliminates this.
 - Filtering was hardcoded to episode titles. The new `EpisodeFilterEntry` allows matching against `title`, `description`, or both (AND within an entry).
-- Order does not matter (set intersection is commutative): all `require` entries are ANDed, all `exclude` entries are ANDed, and require/exclude are independent.
+- Order does not matter (set intersection is commutative): all `require` entries are ANDed, all `exclude` entries are ORed (episode excluded if ANY matches), and require/exclude are independent.
 - Array format supports multiple independent conditions without inventing new field names.
 
 ### Restructured: grouped-only display settings -> `groupList` object

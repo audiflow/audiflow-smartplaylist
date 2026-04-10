@@ -8,6 +8,11 @@ REPO_ROOT="$(cd "$SCHEMA_DIR/.." >/dev/null && pwd)"
 VERSION_FILE="$SCHEMA_DIR/VERSION"
 CACHE_DIR="$REPO_ROOT/.cache/bin"
 
+if ! command -v gh >/dev/null 2>&1; then
+  echo "error: gh CLI is required but not installed. See https://cli.github.com/" >&2
+  exit 1
+fi
+
 if [ ! -f "$VERSION_FILE" ]; then
   echo "error: schema/VERSION not found" >&2
   exit 1

@@ -21,7 +21,7 @@
         </div>
 
     <div class="breadcrumbs"></div> <h1>SmartPlaylist Definition</h1><br/>
-<span class="description"><p>Defines how a playlist organizes, filters, sorts, and displays episodes for a podcast. Each definition file lives at {patternId}/playlists/{id}.json. Multiple definitions under the same config share the podcast's episode pool and claim episodes based on priority.</p>
+<span class="description"><p>Defines how a playlist organizes, filters, sorts, and displays episodes for a podcast. Each definition file lives at {patternId}/playlists/{id}.json. Multiple definitions under the same config share the podcast's episode pool; definitions with filters run first, then filter-less fallbacks claim remaining episodes.</p>
 </span> <span class="badge badge-info no-additional">No Additional Properties</span><div class="all-of-value" id="allOf"><h2 class="handle">
   <label>All of</label>
 </h2><ul class="nav nav-tabs" id="tabsallOf_allOf" role="tablist"><li class="nav-item">
@@ -770,40 +770,6 @@
 
         
         
-
-        
-            </div>
-        </div>
-    </div>
-</div>
-<div class="accordion" id="accordionpriority">
-    <div class="card">
-        <div class="card-header" id="headingpriority">
-            <h2 class="mb-0">
-                <button class="btn btn-link property-name-button" type="button" data-toggle="collapse" data-target="#priority"
-                        aria-expanded="" aria-controls="priority" onclick="setAnchor('#priority')"><span class="property-name">priority</span></button>
-            </h2>
-        </div>
-
-        <div id="priority"
-             class="collapse property-definition-div" aria-labelledby="headingpriority"
-             data-parent="#accordionpriority">
-            <div class="card-body pl-5">
-
-    <div class="breadcrumbs">root
-        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-right-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path
-                fill-rule="evenodd"
-                d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"
-            />
-        </svg>
-    <a href="#priority" onclick="anchorLink('priority')">priority</a></div><span class="badge badge-dark value-type">Type: integer</span> <span class="badge badge-success default-value">Default: 0</span><br/>
-<span class="description"><p>Controls the order playlists claim episodes. Lower numbers go first. If two playlists could match the same episode, the one with lower priority claims it. Playlists with filters always run before filter-less ones. Within each tier, lower priority numbers are processed first.</p>
-</span>
-        
-
-        
-        <p><span class="badge badge-light restriction numeric-restriction" id="priority_number">Value must be greater or equal to <code>0</code></span></p>
 
         
             </div>
@@ -3586,6 +3552,6 @@
 </div>
 
     <footer>
-        <p class="generated-by-footer">Generated using <a href="https://github.com/coveooss/json-schema-for-humans">json-schema-for-humans</a> on 2026-04-10 at 21:51:15 +0900</p>
+        <p class="generated-by-footer">Generated using <a href="https://github.com/coveooss/json-schema-for-humans">json-schema-for-humans</a> on 2026-04-10 at 22:01:05 +0900</p>
     </footer></body>
 </html>
