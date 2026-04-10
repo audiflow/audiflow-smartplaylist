@@ -28,9 +28,9 @@ detect_binary_name() {
   case "$os" in
     Linux)
       case "$arch" in
-        x86_64)  echo "audiflow-editor-x86_64-unknown-linux-gnu" ;;
-        aarch64) echo "audiflow-editor-aarch64-unknown-linux-gnu" ;;
-        *)       echo "error: unsupported architecture: $arch" >&2; exit 1 ;;
+        x86_64)          echo "audiflow-editor-x86_64-unknown-linux-gnu" ;;
+        aarch64 | arm64) echo "audiflow-editor-aarch64-unknown-linux-gnu" ;;
+        *)               echo "error: unsupported architecture: $arch" >&2; exit 1 ;;
       esac
       ;;
     Darwin)
