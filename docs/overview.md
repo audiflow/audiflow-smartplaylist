@@ -39,7 +39,7 @@ audiflow-smartplaylist is the production configuration data repository for the a
 ## Key dependencies
 
 - `audiflow-smartplaylist-editor` (sp_cli package): CI uses `validate.dart` and `bump_versions.dart`
-- `check-jsonschema` (Python, via uv): Local schema validation
+- `audiflow-editor` binary (downloaded via `gh` CLI): Local schema validation
 - GitHub Pages: Static hosting for production deployment
 
 ## Read next

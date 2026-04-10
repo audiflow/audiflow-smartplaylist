@@ -74,9 +74,9 @@ Each entry in `patterns`:
 
 ## Playlist definition (`{patternId}/playlists/{playlistId}.json`)
 
-Required fields: `id`, `displayName`, `resolverType`.
+Required fields: `id`, `displayName`, `resolverType`, `presentation`.
 
-Valid `resolverType` values:
+Valid `resolverType` values (deprecated v3 aliases `rss`, `category`, `titleAppearanceOrder` are also accepted by validation but should not be used in new configs):
 
 | Resolver | Grouping strategy | Key fields |
 |----------|-------------------|------------|

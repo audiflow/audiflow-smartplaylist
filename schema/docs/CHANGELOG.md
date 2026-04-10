@@ -34,9 +34,9 @@
 
 **Why:** `yearHeaderMode` described the UI mechanism (headers) rather than the relationship (how groups bind to years). `perEpisode` was misleading -- the behavior is splitting a group across multiple years, parallel to `playlistStructure: split` (subsequently renamed to `presentation: separate`). `firstEpisode` was unclear about what "first" meant; `pinToYear` clearly says the group anchors to one year.
 
-### Renamed: `smartPlaylistEpisodeExtractor` -> `numberingExtractor`
+### Renamed: `smartPlaylistEpisodeExtractor` -> `episodeExtractor` (subsequently renamed to `numberingExtractor` in v4)
 
-**Why:** Shorter, clearer. The `smartPlaylist` prefix was redundant since the entire schema is about smart playlists.
+**Why:** Shorter, clearer. The `smartPlaylist` prefix was redundant since the entire schema is about smart playlists. In the v2 restructure, this field was renamed to `episodeExtractor`; the later `numberingExtractor` rename happened in v4.
 
 ### Restructured: flat filters -> `episodeFilters` object
 
