@@ -91,6 +91,32 @@ def fetch_feed(url: str) -> bytes:
         return resp.read()
 
 
+def compute_date_range(episodes: list[Episode]) -> tuple[str, str]:
+    """Compute the (oldest, newest) pub-date range from a list of episodes.
+
+    RSS feeds are not guaranteed ordered, so we parse all dates and take
+    min/max. Normalizes to UTC to avoid mixing aware/naive datetimes.
+    """
+    utc = datetime.timezone.utc
+    parsed_dates: list[tuple[str, datetime.datetime]] = []
+    for ep in episodes:
+        if ep.pub_date:
+            try:
+                dt = parsedate_to_datetime(ep.pub_date)
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=utc)
+                else:
+                    dt = dt.astimezone(utc)
+                parsed_dates.append((ep.pub_date, dt))
+            except (ValueError, TypeError):
+                pass
+    if parsed_dates:
+        oldest = min(parsed_dates, key=lambda pair: pair[1])[0]
+        newest = max(parsed_dates, key=lambda pair: pair[1])[0]
+        return (oldest, newest)
+    return ("", "")
+
+
 def parse_feed(xml_content: bytes | str, feed_url: str) -> FeedInfo:
     """Parse RSS feed XML into structured feed info.
 
@@ -134,27 +160,7 @@ def parse_feed(xml_content: bytes | str, feed_url: str) -> FeedInfo:
                 guid=guid,
             ))
 
-    # Parse dates and use min/max -- RSS feeds are not guaranteed ordered.
-    # Normalize to UTC to avoid TypeError from mixing aware/naive datetimes.
-    utc = datetime.timezone.utc
-    parsed_dates: list[tuple[str, datetime.datetime]] = []
-    for ep in episodes:
-        if ep.pub_date:
-            try:
-                dt = parsedate_to_datetime(ep.pub_date)
-                if dt.tzinfo is None:
-                    dt = dt.replace(tzinfo=utc)
-                else:
-                    dt = dt.astimezone(utc)
-                parsed_dates.append((ep.pub_date, dt))
-            except (ValueError, TypeError):
-                pass
-    if parsed_dates:
-        oldest = min(parsed_dates, key=lambda pair: pair[1])[0]
-        newest = max(parsed_dates, key=lambda pair: pair[1])[0]
-        date_range = (oldest, newest)
-    else:
-        date_range = ("", "")
+    date_range = compute_date_range(episodes)
 
     return FeedInfo(
         title=title,
@@ -535,6 +541,7 @@ def main() -> None:
         if 0 < args.limit:
             feed.episodes = feed.episodes[:args.limit]
             feed.episode_count = len(feed.episodes)
+            feed.date_range = compute_date_range(feed.episodes)
 
         titles = [ep.title for ep in feed.episodes]
         numbering = detect_numbering(titles)
