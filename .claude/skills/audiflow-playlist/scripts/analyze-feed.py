@@ -268,7 +268,10 @@ def detect_rss_seasons(episodes: list[Episode]) -> dict:
     return {
         "season_coverage": round(100 * has_season / total, 1) if 0 < total else 0,
         "episode_coverage": round(100 * has_episode / total, 1) if 0 < total else 0,
-        "distinct_seasons": sorted(seasons_set, key=lambda s: int(s) if s.isdigit() else 0),
+        "distinct_seasons": sorted(
+            seasons_set,
+            key=lambda s: (0, int(s)) if s.isdigit() else (1, s),
+        ),
         "season_count": len(seasons_set),
     }
 
@@ -337,9 +340,10 @@ def suggest_resolver(
 
     # Build suggested groups for titleClassifier
     suggested_groups = []
-    used_group_ids: set[str] = set()
+    used_group_ids: set[str] = {"other"}  # reserve catch-all ID
     if prefixes:
-        for idx, p in enumerate(prefixes[:10]):
+        included_prefixes = prefixes[:10]
+        for idx, p in enumerate(included_prefixes):
             escaped = re.escape(p["prefix"])
             raw_id = re.sub(r"[^a-z0-9_]", "_", p["prefix"].lower())[:30]
             # Strip leading/trailing underscores and collapse runs
@@ -360,11 +364,13 @@ def suggest_resolver(
                 "pattern": escaped,
                 "episodeCount": p["count"],
             })
-        # Catch-all group omits "pattern" entirely (schema does not allow null)
+        # Catch-all group omits "pattern" entirely (schema does not allow null).
+        # Only subtract included prefixes (not all) to avoid undercounting.
+        included_total = sum(p["count"] for p in included_prefixes)
         suggested_groups.append({
             "id": "other",
             "displayName": "Other",
-            "episodeCount": len(titles) - sum(p["count"] for p in prefixes),
+            "episodeCount": len(titles) - included_total,
         })
 
     # Build suggested filters
