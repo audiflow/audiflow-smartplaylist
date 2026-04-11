@@ -15,6 +15,7 @@ episode titles before writing playlist definitions.
 """
 
 import argparse
+import datetime
 import hashlib
 import json
 import re
@@ -23,10 +24,11 @@ import urllib.request
 from email.utils import parsedate_to_datetime
 try:
     import defusedxml.ElementTree as ET
-except ImportError:
-    # defusedxml not installed -- fall back to stdlib with a warning.
-    # Safe enough for local CLI use; CI should install defusedxml.
-    import xml.etree.ElementTree as ET
+except ImportError as exc:
+    raise SystemExit(
+        "Missing required dependency 'defusedxml'. "
+        "Install it with: python -m pip install defusedxml"
+    ) from exc
 from collections import Counter
 from dataclasses import dataclass, field
 
@@ -127,12 +129,18 @@ def parse_feed(xml_content: str, feed_url: str) -> FeedInfo:
                 guid=guid,
             ))
 
-    # Parse dates and use min/max -- RSS feeds are not guaranteed ordered
-    parsed_dates: list[tuple[str, object]] = []
+    # Parse dates and use min/max -- RSS feeds are not guaranteed ordered.
+    # Normalize to UTC to avoid TypeError from mixing aware/naive datetimes.
+    utc = datetime.timezone.utc
+    parsed_dates: list[tuple[str, datetime.datetime]] = []
     for ep in episodes:
         if ep.pub_date:
             try:
                 dt = parsedate_to_datetime(ep.pub_date)
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=utc)
+                else:
+                    dt = dt.astimezone(utc)
                 parsed_dates.append((ep.pub_date, dt))
             except (ValueError, TypeError):
                 pass
@@ -206,7 +214,7 @@ def detect_numbering(titles: list[str]) -> dict:
 
     results = {}
     for pattern, desc in numbering_patterns:
-        matches = [(t, re.search(pattern, t)) for t in titles]
+        matches = [(t, re.search(pattern, t, re.IGNORECASE)) for t in titles]
         matched = [(t, m) for t, m in matches if m]
         if matched:
             results[desc] = {
@@ -352,10 +360,10 @@ def suggest_resolver(
                 "pattern": escaped,
                 "episodeCount": p["count"],
             })
+        # Catch-all group omits "pattern" entirely (schema does not allow null)
         suggested_groups.append({
             "id": "other",
             "displayName": "Other",
-            "pattern": None,
             "episodeCount": len(titles) - sum(p["count"] for p in prefixes),
         })
 
@@ -483,7 +491,7 @@ def format_text_report(report: dict) -> str:
     if suggestion["suggestedGroups"]:
         lines.append("  Suggested groups:")
         for g in suggestion["suggestedGroups"]:
-            pattern_str = g["pattern"] or "(catch-all)"
+            pattern_str = g.get("pattern") or "(catch-all)"
             lines.append(f"    - {g['displayName']} [{pattern_str}] ({g['episodeCount']} episodes)")
     lines.append("")
 
