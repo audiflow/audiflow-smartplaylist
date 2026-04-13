@@ -393,7 +393,6 @@ The following top-level fields are accepted as aliases during v4-to-v5 migration
 | `prependSeasonNumber` | `groupItem.prependSeasonNumber` | Moved to where it semantically belongs. |
 | `episodeList` | `episodeListing` + `episodeItem` | Split: collection settings to `episodeListing`, item settings to `episodeItem`. |
 | `episodeList.titleExtractor` | `episodeItem.titleExtractor` | Moved from collection to item level. |
-| `episodeExtractor` | `grouping.numberingExtractor` | Deprecated v3 alias for `numberingExtractor`. |
 
 ---
 
@@ -492,14 +491,6 @@ Groups episodes by matching titles against patterns defined in `grouping.staticC
   }
 }
 ```
-
-### Deprecated Aliases
-
-| Alias | Maps To |
-|-------|---------|
-| `rss` | `seasonNumber` |
-| `category` | `titleClassifier` |
-| `titleAppearanceOrder` | `titleDiscovery` |
 
 ---
 
@@ -694,7 +685,6 @@ The v4 `GroupDef` type contained `display` and `episodeList` sub-objects that ma
 | `episodeList.sort` | `episodeListing.sort` |
 | `episodeList.titleExtractor` | `episodeItem.titleExtractor` |
 | `episodeList.showYearHeaders` | _(not overridable per-classifier in v5)_ |
-| `episodeExtractor` | `numberingExtractor` (deprecated v3 alias) |
 
 ---
 
