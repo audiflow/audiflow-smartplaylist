@@ -69,7 +69,7 @@ class Suggestion:
     title_patterns: list[PatternMatch]
     has_season_numbers: bool
     has_bracket_format: bool
-    suggested_filters: list[dict]
+    suggested_filters: dict | None
     suggested_groups: list[dict]
     group_stats: dict[str, int]
 
@@ -376,7 +376,10 @@ def suggest_resolver(
             suggested_groups.append({
                 "id": candidate,
                 "displayName": p["prefix"],
-                "pattern": f"^{escaped}",
+                "pattern": {
+                    "source": "title",
+                    "pattern": f"^{escaped}",
+                },
             })
             group_stats[candidate] = p["count"]
         # Catch-all group omits "pattern" entirely (schema does not allow null).
@@ -388,17 +391,24 @@ def suggest_resolver(
         })
         group_stats["other"] = len(titles) - included_total
 
-    # Build suggested filters using the playlist schema's episodeFilters shape
-    suggested_filters: list[dict] = []
+    # Build a single episodeFilters object matching the playlist schema shape.
+    # Multiple bracket patterns are merged into the same require list so the
+    # suggestion can be pasted directly into a playlist definition.
+    require_rules: list[dict] = []
+    exclude_rules: list[dict] = []
     if bracket_patterns:
         for bp in bracket_patterns:
             if bp.pattern == "numbered_bracket":
-                suggested_filters.append({
-                    "require": [
-                        {"title": r"[\u3010\uff3b]\d+-\d+[\u3011\uff3d]"},
-                    ],
-                    "exclude": [],
-                })
+                require_rules.append(
+                    {"title": r"[\u3010\uff3b]\d+-\d+[\u3011\uff3d]"}
+                )
+    suggested_filters: dict | None = None
+    if require_rules or exclude_rules:
+        suggested_filters = {}
+        if require_rules:
+            suggested_filters["require"] = require_rules
+        if exclude_rules:
+            suggested_filters["exclude"] = exclude_rules
 
     return Suggestion(
         resolver_type=suggested_resolver,
@@ -515,7 +525,13 @@ def format_text_report(report: dict) -> str:
         lines.append("  Suggested groups:")
         stats = suggestion.get("groupStats", {})
         for g in suggestion["suggestedGroups"]:
-            pattern_str = g.get("pattern") or "(catch-all)"
+            matcher = g.get("pattern")
+            if isinstance(matcher, dict):
+                pattern_str = f"{matcher.get('source', '?')}:{matcher.get('pattern', '')}"
+            elif matcher:
+                pattern_str = str(matcher)
+            else:
+                pattern_str = "(catch-all)"
             count = stats.get(g["id"], 0)
             lines.append(f"    - {g['displayName']} [{pattern_str}] ({count} episodes)")
     lines.append("")

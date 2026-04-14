@@ -17,12 +17,7 @@
     "userSortable": true
   },
   "groupItem": {
-    "showDateRange": false
-  },
-  "episodeListing": {
-    "showYearHeaders": true
-  },
-  "episodeItem": {
+    "showDateRange": false,
     "titleExtractor": {
       "source": "title",
       "pattern": "\\(([^)]+)\\)",
@@ -32,6 +27,16 @@
         "pattern": "（([^）]+)）",
         "group": 1
       }
+    }
+  },
+  "episodeListing": {
+    "showYearHeaders": true
+  },
+  "episodeItem": {
+    "titleExtractor": {
+      "source": "title",
+      "pattern": "^(.*?)[(（][^)）]+[)）]\\s*$",
+      "group": 1
     }
   }
 }
