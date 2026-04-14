@@ -76,7 +76,7 @@ Each entry in `patterns`:
 
 Required fields: `id`, `displayName`, `resolverType`, `presentation`.
 
-Valid `resolverType` values (deprecated v3 aliases `rss`, `category`, `titleAppearanceOrder` are also accepted by validation but should not be used in new configs):
+Valid `resolverType` values:
 
 | Resolver | Grouping strategy | Key fields |
 |----------|-------------------|------------|
@@ -123,7 +123,7 @@ The result is a 12-character lowercase hex string (48 bits). The editor enforces
 
 - Missing required fields in any JSON file
 - `id` mismatch between filename/directory and field value
-- `resolverType` value not in `[seasonNumber, titleClassifier, year, titleDiscovery, rss, category, titleAppearanceOrder]`
+- `resolverType` value not in `[seasonNumber, titleClassifier, year, titleDiscovery]`
 - `titleClassifier` resolver without a `groups` array
 - `dataVersion` or `playlistCount` mismatch between root index and pattern meta
 - Additional properties not defined in the schema (all schemas use `additionalProperties: false`)

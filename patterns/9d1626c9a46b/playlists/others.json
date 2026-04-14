@@ -1,5 +1,7 @@
 {
+  "id": "others",
   "displayName": "その他",
+  "priority": 1,
   "episodeFilters": {
     "exclude": [
       {
@@ -7,7 +9,7 @@
       }
     ]
   },
-  "id": "others",
-  "presentation": "combined",
-  "resolverType": "year"
+  "grouping": {
+    "by": "year"
+  }
 }

@@ -1,5 +1,7 @@
 {
+  "id": "seasons",
   "displayName": "Seasons",
+  "priority": 0,
   "episodeFilters": {
     "exclude": [
       {
@@ -7,17 +9,16 @@
       }
     ]
   },
-  "groupList": {
-    "showDateRange": true
+  "grouping": {
+    "by": "seasonNumber"
   },
-  "groups": [],
-  "id": "seasons",
-  "presentation": "combined",
-  "prependSeasonNumber": true,
-  "resolverType": "seasonNumber",
-  "titleExtractor": {
-    "group": 1,
-    "pattern": "^(.*?) [-|] ",
-    "source": "title"
+  "groupItem": {
+    "showDateRange": true,
+    "prependSeasonNumber": true,
+    "titleExtractor": {
+      "source": "title",
+      "pattern": "^(.*?) [-|] ",
+      "group": 1
+    }
   }
 }
