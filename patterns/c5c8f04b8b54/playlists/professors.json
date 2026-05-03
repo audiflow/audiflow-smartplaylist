@@ -9,7 +9,7 @@
     "partitionBy": "seasonNumber",
     "titleExtractor": {
       "source": "seasonNumber",
-      "template": "シーズン {value}"
+      "template": "シーズン ${0}"
     }
   },
   "groupListing": {
@@ -24,11 +24,11 @@
     "titleExtractor": {
       "source": "title",
       "pattern": "【(?:出演：)?(.+?)\\s*編",
-      "group": 1,
+      "template": "${1}",
       "fallback": {
         "source": "title",
         "pattern": "【(?:出演：)?(.+?)\\s*】",
-        "group": 1
+        "template": "${1}"
       }
     }
   },
@@ -36,7 +36,7 @@
     "titleExtractor": {
       "source": "title",
       "pattern": "#\\d+(?:-\\d+)?\\s+(.+?)\\s*【",
-      "group": 1
+      "template": "${1}"
     }
   }
 }

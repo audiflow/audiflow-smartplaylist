@@ -21,11 +21,11 @@
     "titleExtractor": {
       "source": "title",
       "pattern": "\\(([^)]+)\\)",
-      "group": 1,
+      "template": "${1}",
       "fallback": {
         "source": "title",
         "pattern": "（([^）]+)）",
-        "group": 1
+        "template": "${1}"
       }
     }
   },
@@ -36,7 +36,7 @@
     "titleExtractor": {
       "source": "title",
       "pattern": "^(.*?)[(（][^)）]+[)）]\\s*$",
-      "group": 1
+      "template": "${1}"
     }
   }
 }

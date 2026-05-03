@@ -30,7 +30,7 @@
     "titleExtractor": {
       "source": "title",
       "pattern": "^#\\d+ *?(.*?)（(?:その\\d+|[前中後]編)）",
-      "group": 1
+      "template": "${1}"
     }
   }
 }

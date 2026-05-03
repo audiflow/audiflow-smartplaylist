@@ -18,7 +18,7 @@
     "titleExtractor": {
       "source": "title",
       "pattern": "^(.*?) [-|] ",
-      "group": 1
+      "template": "${1}"
     }
   }
 }
