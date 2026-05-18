@@ -55,6 +55,28 @@ All `prod/*`, `stg/*`, `dev/*`, and `main` branches are protected via GitHub rul
 - Status checks must pass (validate workflow)
 - No force push or deletion
 
+## Preset rename
+
+Schema v7 introduces the `smartplaylist -> preset` rename. During the
+migration, two on-disk directory layouts coexist on the deploy:
+
+- v6 and earlier branches keep `patterns/` as the source directory.
+- v7 branches use `presets/` as the source directory.
+
+Both layouts are served concurrently from the same `gh-pages` branch
+under their respective `assets*/v{N}/` paths -- the deploy workflow on
+each branch syncs whichever directory that branch carries.
+
+All three environments for v7 (`dev/v7`, `stg/v7`, `prod/v7`) move to
+`presets/` together as v7 ships per environment via the standard
+`dev -> stg -> prod` promotion. There is no mixed state inside a single
+version: a v7 branch always uses `presets/`, never `patterns/`.
+
+See [naming-migration.md](./naming-migration.md) for the full term
+mapping and the
+[migration plan](../superpowers/plans/2026-05-18-rename-smartplaylist-to-preset.md)
+for rollout sequencing.
+
 ## GitHub Pages configuration
 
 Pages must be configured to deploy from the `gh-pages` branch at `/` (root). Set in Settings > Pages.

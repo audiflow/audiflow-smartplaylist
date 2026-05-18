@@ -58,6 +58,32 @@ git push origin feat/vN:dev/vN
 Same end state in one step. Skips the `validate.yml` gate; prefer the PR
 flow for major version bumps.
 
+## v7 special case: smartplaylist -> preset rename
+
+Schema v7 carries the `smartplaylist -> preset` rename and is the first
+major bump where the rollout differs structurally from previous versions.
+
+- The on-disk directory layout flips from `patterns/` to `presets/`
+  **only on v7+**. Older versions (v1 through v6) keep `patterns/`
+  indefinitely; their branches and deployed assets are untouched by the
+  rename.
+- `.github/workflows/deploy-pages.yml` on v7 branches must rsync from
+  `presets/` instead of `patterns/`. The workflow file checked into a
+  given branch is the one that runs for that branch's pushes, so the
+  workflow change ships ON the v7 branch (`feat/v7` -> `dev/v7` -> ...),
+  not on `main`. Earlier-version branches keep the `patterns/`-based
+  workflow.
+- The editor release binary name remains `audiflow-editor` for v7
+  (decision recorded in the migration plan -- no `audiflow-preset-editor`
+  rename). The v7 binary's `bump-versions` subcommand auto-detects
+  `patterns/` vs `presets/`, so a single release works against both old
+  and new layouts.
+
+See also:
+
+- [Naming migration glossary](../architecture/naming-migration.md)
+- [Full migration plan](../superpowers/plans/2026-05-18-rename-smartplaylist-to-preset.md)
+
 ## Anti-patterns
 
 - Do not create a separate "bump-only" commit on `dev/vN` for
